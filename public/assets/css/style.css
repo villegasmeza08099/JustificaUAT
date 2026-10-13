@@ -1,0 +1,19 @@
+body{
+    background:#f8f9fa;
+}
+
+.sidebar{
+    min-height:100vh;
+}
+
+.card-dashboard{
+    transition:0.3s;
+}
+
+.card-dashboard:hover{
+    transform:translateY(-4px);
+}
+
+.logo{
+    font-weight:bold;
+}
