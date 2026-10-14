@@ -8,8 +8,13 @@ class Usuario
     {
         $db = Database::connect();
 
-        $sql = "SELECT * FROM usuarios
-                ORDER BY nombre";
+        $sql = " SELECT
+        u.*,
+        r.nombre AS rol
+    FROM usuarios u
+    INNER JOIN roles r
+        ON u.rol_id = r.id
+    ORDER BY u.nombre";
 
         return $db->query($sql)
                   ->fetchAll(PDO::FETCH_ASSOC);
@@ -19,9 +24,13 @@ class Usuario
     {
         $db = Database::connect();
 
-        $sql = "SELECT *
-                FROM usuarios
-                WHERE id = ?";
+        $sql = "SELECT
+        u.*,
+        r.nombre AS rol
+    FROM usuarios u
+    INNER JOIN roles r
+        ON u.rol_id = r.id
+    WHERE u.id = ?";
 
         $stmt = $db->prepare($sql);
 
@@ -34,10 +43,16 @@ class Usuario
     {
         $db = Database::connect();
 
-        $sql = "SELECT *
-                FROM usuarios
-                WHERE correo = ?
-                LIMIT 1";
+      $sql = "
+SELECT
+    u.*,
+    r.nombre AS rol
+FROM usuarios u
+INNER JOIN roles r
+    ON u.rol_id = r.id
+WHERE u.correo = ?
+LIMIT 1
+";
 
         $stmt = $db->prepare($sql);
 

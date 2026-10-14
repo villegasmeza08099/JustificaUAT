@@ -17,6 +17,7 @@ class JustificanteController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            
             $archivo = null;
 
             if (!empty($_FILES['evidencia']['name'])) {
@@ -59,6 +60,16 @@ class JustificanteController
             );
             exit;
         }
+		
+		require_once __DIR__ . '/../Models/Alumno.php';
+    require_once __DIR__ . '/../Models/Materia.php';
+
+    $alumnos = Alumno::obtenerTodos();
+
+    $materias = Materia::obtenerTodas();
+
+    require_once __DIR__ .
+    '/../Views/justificantes/create.php';
 
         require_once __DIR__ .
         '/../Views/justificantes/create.php';

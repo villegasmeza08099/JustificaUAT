@@ -14,7 +14,7 @@ class AuthController
         $correo = trim($_POST['correo'] ?? '');
         $password = $_POST['password'] ?? '';
 		
-		echo "Correo recibido: " . $correo . "<br>";
+	//	echo "Correo recibido: " . $correo . "<br>";
 		
 
         $usuario = Usuario::buscarPorCorreo($correo);
@@ -46,6 +46,8 @@ class AuthController
         Usuario::actualizarUltimoAcceso($usuario['id']);
 		
 		Bitacora::registrar($usuario['id'],'Inicio de sesión','Acceso al sistema');
+		
+
 
         header('Location: index.php?page=dashboard');
         exit;

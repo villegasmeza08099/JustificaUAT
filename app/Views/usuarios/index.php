@@ -7,7 +7,9 @@
 
         <h2>Usuarios</h2>
 
-        index.php?page=usuarios_create
+        <a
+            href="index.php?page=usuarios_create"
+            class="btn btn-success">
 
             Nuevo Usuario
 
@@ -15,8 +17,7 @@
 
     </div>
 
-    <table
-    class="table table-striped mt-3">
+    <table class="table table-striped mt-3">
 
         <thead>
 
@@ -35,10 +36,7 @@
 
         <tbody>
 
-            <?php foreach(
-                $usuarios
-                as $u
-            ): ?>
+            <?php foreach($usuarios as $u): ?>
 
             <tr>
 
@@ -60,27 +58,41 @@
 
                 <td>
 
-                    <?=
-                    $u['activo']
-                    ? 'Sí'
-                    : 'No';
-                    ?>
+                    <?= $u['activo'] ? 'Sí' : 'No'; ?>
 
                 </td>
 
                 <td>
 
-                    index.php?page=usuarios_show&id=<?= $u['id']; ?>                    class="btn btn-info btn-sm">
+                   <a href="index.php?page=usuarios_show&id=<?= $u['id']; ?>"   class="btn btn-info btn-sm">
 
                         Ver
 
                     </a>
 
-                    index.php?page=usuarios_edit&id=<?= $u['id']; ?>                    class="btn btn-warning btn-sm">
+                    <a href="index.php?page=usuarios_edit&id=<?= $u['id']; ?>"                        class="btn btn-warning btn-sm">
 
                         Editar
 
                     </a>
+
+                    <?php if($u['activo']): ?>
+
+                       <a href="index.php?page=usuarios_desactivar&id=<?= $u['id']; ?>  "                          class="btn btn-danger btn-sm">
+
+                            Desactivar
+
+                        </a>
+
+                    <?php else: ?>
+
+                      <a href="  index.php?page=usuarios_activar&id=<?= $u['id']; ?>    "                        class="btn btn-success btn-sm">
+
+                            Activar
+
+                        </a>
+
+                    <?php endif; ?>
 
                 </td>
 

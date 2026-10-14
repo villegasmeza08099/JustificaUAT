@@ -67,7 +67,7 @@ class UsuarioController
         '/../Views/usuarios/create.php';
     }
 
-    public function edit()
+    public function editar()
     {
         $id =
         $_GET['id'];

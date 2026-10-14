@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
     <div class="container-fluid">
@@ -11,7 +13,9 @@
         </a>
 
         <div class="ms-auto text-white">
+<pre>
 
+</pre>
             <span class="me-3">
                 <?= $_SESSION['nombre'] ?? 'Usuario'; ?>
             </span>

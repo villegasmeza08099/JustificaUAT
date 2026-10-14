@@ -1,14 +1,6 @@
 <?php
 
-session_start();
-
 require_once '../config/bootstrap.php';
-
-/*
-|--------------------------------------------------------------------------
-| Router básico
-|--------------------------------------------------------------------------
-*/
 
 $page = $_GET['page'] ?? 'dashboard';
 
@@ -16,140 +8,149 @@ switch ($page) {
 
     case 'dashboard':
 
-        require_once
-        '../app/Controllers/DashboardController.php';
+        require_once '../app/Controllers/DashboardController.php';
 
-        $controller =
-        new DashboardController();
-
-        $controller->index();
+        (new DashboardController())->index();
 
         break;
+
+
+    /* ==========================
+       USUARIOS
+    ========================== */
 
     case 'usuarios':
 
-        require_once
-        '../app/Controllers/UsuarioController.php';
+        require_once '../app/Controllers/UsuarioController.php';
 
-        $controller =
-        new UsuarioController();
-
-        $controller->index();
+        (new UsuarioController())->index();
 
         break;
+
 
     case 'usuarios_create':
 
-        require_once
-        '../app/Controllers/UsuarioController.php';
+        require_once '../app/Controllers/UsuarioController.php';
 
-        $controller =
-        new UsuarioController();
-
-        $controller->crear();
+        (new UsuarioController())->crear();
 
         break;
+
 
     case 'usuarios_edit':
 
-        require_once
-        '../app/Controllers/UsuarioController.php';
+        require_once '../app/Controllers/UsuarioController.php';
 
-        $controller =
-        new UsuarioController();
-
-        $controller->editar();
+        (new UsuarioController())->editar();
 
         break;
+
+
+    case 'usuarios_show':
+
+        require_once '../app/Controllers/UsuarioController.php';
+
+        (new UsuarioController())->show();
+
+        break;
+
+
+    case 'usuarios_activar':
+
+        require_once '../app/Controllers/UsuarioController.php';
+
+        (new UsuarioController())->activar();
+
+        break;
+
+
+    case 'usuarios_desactivar':
+
+        require_once '../app/Controllers/UsuarioController.php';
+
+        (new UsuarioController())->desactivar();
+
+        break;
+
+
+    /* ==========================
+       JUSTIFICANTES
+    ========================== */
 
     case 'justificantes':
 
-        require_once
-        '../app/Controllers/JustificanteController.php';
+        require_once '../app/Controllers/JustificanteController.php';
 
-        $controller =
-        new JustificanteController();
-
-        $controller->index();
+        (new JustificanteController())->index();
 
         break;
+
 
     case 'justificantes_create':
 
-        require_once
-        '../app/Controllers/JustificanteController.php';
+        require_once '../app/Controllers/JustificanteController.php';
 
-        $controller =
-        new JustificanteController();
-
-        $controller->crear();
+        (new JustificanteController())->crear();
 
         break;
+
+
+    case 'justificantes_show':
+
+        require_once '../app/Controllers/JustificanteController.php';
+
+        (new JustificanteController())->show();
+
+        break;
+
+
+    case 'justificantes_edit':
+
+        require_once '../app/Controllers/JustificanteController.php';
+
+        (new JustificanteController())->edit();
+
+        break;
+
+
+    case 'justificantes_delete':
+
+        require_once '../app/Controllers/JustificanteController.php';
+
+        (new JustificanteController())->delete();
+
+        break;
+
+
+    /* ==========================
+       DECISIONES
+    ========================== */
 
     case 'decision_evaluar':
 
-        require_once
-        '../app/Controllers/DecisionController.php';
+        require_once '../app/Controllers/DecisionController.php';
 
-        $controller =
-        new DecisionController();
-
-        $controller->evaluar();
+        (new DecisionController())->evaluar();
 
         break;
-		
-	case 'usuarios_show':
-    (new UsuarioController())->show();
-    break;
 
-case 'usuarios_create':
-    (new UsuarioController())->create();
-    break;
 
-case 'usuarios_edit':
-    (new UsuarioController())->edit();
-    break;
+    /* ==========================
+       BITÁCORA
+    ========================== */
 
-case 'usuarios_activar':
-    (new UsuarioController())->activar();
-    break;
+    case 'bitacora':
 
-case 'usuarios_desactivar':
-    (new UsuarioController())->desactivar();
-    break;
-	case 'justificantes_show':
-    (new JustificanteController())
-        ->show();
-    break;
+        require_once '../app/Controllers/BitacoraController.php';
 
-case 'justificantes_edit':
-    (new JustificanteController())
-        ->edit();
-    break;
+        (new BitacoraController())->index();
 
-case 'justificantes_delete':
-    (new JustificanteController())
-        ->delete();
-    break;
-	case 'bitacora':
+        break;
 
-    require_once
-    '../app/Controllers/BitacoraController.php';
-
-    $controller =
-    new BitacoraController();
-
-    $controller->index();
-
-    break;
 
     default:
 
-        require_once
-        '../app/Controllers/DashboardController.php';
+        require_once '../app/Controllers/DashboardController.php';
 
-        $controller =
-        new DashboardController();
-
-        $controller->index();
+        (new DashboardController())->index();
 }

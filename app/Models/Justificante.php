@@ -8,9 +8,19 @@ class Justificante
     {
         $db = Database::connect();
 
-        $sql = "SELECT *
-                FROM justificantes
-                ORDER BY fecha_registro DESC";
+        $sql = "
+SELECT
+    j.*,
+    a.nombre AS nombre_alumno,
+    a.matricula,
+    m.nombre AS materia
+FROM justificantes j
+INNER JOIN alumnos a
+    ON j.alumno_id = a.id
+INNER JOIN materias m
+    ON j.materia_id = m.id
+ORDER BY j.fecha_registro DESC
+";
 
         return $db->query($sql)
                   ->fetchAll(PDO::FETCH_ASSOC);
@@ -20,9 +30,19 @@ class Justificante
     {
         $db = Database::connect();
 
-        $sql = "SELECT *
-                FROM justificantes
-                WHERE id=?";
+        $sql = "
+SELECT
+    j.*,
+    a.nombre AS nombre_alumno,
+    a.matricula,
+    m.nombre AS materia
+FROM justificantes j
+INNER JOIN alumnos a
+    ON j.alumno_id = a.id
+INNER JOIN materias m
+    ON j.materia_id = m.id
+WHERE j.id = ?
+";
 
         $stmt = $db->prepare($sql);
 
@@ -40,36 +60,32 @@ class Justificante
             date('YmdHis');
 
         $sql = "
-            INSERT INTO justificantes
-            (
-                folio,
-                matricula,
-                nombre_alumno,
-                carrera,
-                materia,
-                fecha_ausencia,
-                motivo,
-                archivo_evidencia,
-                estado
-            )
-            VALUES
-            (
-                ?,?,?,?,?,?,?,?,
-                'Pendiente'
-            )";
+INSERT INTO justificantes
+(
+    folio,
+    alumno_id,
+    materia_id,
+    fecha_ausencia,
+    motivo,
+    archivo_evidencia,
+    estado
+)
+VALUES
+(
+    ?,?,?,?,?,?,
+    'Pendiente'
+)";
 
         $stmt = $db->prepare($sql);
 
         return $stmt->execute([
-            $folio,
-            $data['matricula'],
-            $data['nombre_alumno'],
-            $data['carrera'],
-            $data['materia'],
-            $data['fecha_ausencia'],
-            $data['motivo'],
-            $data['archivo_evidencia']
-        ]);
+    $folio,
+    $data['alumno_id'],
+    $data['materia_id'],
+    $data['fecha_ausencia'],
+    $data['motivo'],
+    $data['archivo_evidencia'] ?? null
+]);
     }
 
     public static function cambiarEstado(
@@ -164,20 +180,20 @@ class Justificante
 
     $sql = "
     UPDATE justificantes
-    SET
-        materia=?,
-        fecha_ausencia=?,
-        motivo=?
-    WHERE id=?";
+SET
+    materia_id=?,
+    fecha_ausencia=?,
+    motivo=?
+WHERE id=?";
 
     $stmt = $db->prepare($sql);
 
     return $stmt->execute([
-        $data['materia'],
-        $data['fecha_ausencia'],
-        $data['motivo'],
-        $id
-    ]);
+    $data['materia_id'],
+    $data['fecha_ausencia'],
+    $data['motivo'],
+    $id
+]);
 }
 
 public static function eliminar(

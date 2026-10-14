@@ -1,30 +1,76 @@
-<div class="container mt-4">
+<?php include '../app/Views/layouts/header.php'; ?>
+<?php include '../app/Views/layouts/navbar.php'; ?>
 
-<div class="card">
+<div class="container-fluid">
 
-    <div class="card-header">
+    <div class="row">
 
-        Usuario
+        <?php include '../app/Views/layouts/sidebar.php'; ?>
 
-    </div>
+        <div class="col-md-10 p-4">
 
-    <div class="card-body">
+            <div class="card">
 
-        <h5>
-            <?= $usuario['nombre']; ?>
-        </h5>
+                <div class="card-header">
+                    <h4>Detalle de Usuario</h4>
+                </div>
 
-        <p>
-            <?= $usuario['correo']; ?>
-        </p>
+                <div class="card-body">
 
-        <p>
-            Rol:
-            <?= $usuario['rol']; ?>
-        </p>
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <p>
+                                <strong>Nombre:</strong><br>
+                                <?= $usuario['nombre']; ?>
+                            </p>
+
+                            <p>
+                                <strong>Correo:</strong><br>
+                                <?= $usuario['correo']; ?>
+                            </p>
+
+                            <p>
+                                <strong>Rol:</strong><br>
+                                <?= $usuario['rol']; ?>
+                            </p>
+
+                            <p>
+                                <strong>Estado:</strong><br>
+                                <?= $usuario['activo'] ? 'Activo' : 'Inactivo'; ?>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <a
+                        href="index.php?page=usuarios"
+                        class="btn btn-secondary">
+
+                        Volver
+
+                    </a>
+
+                    <a
+                        href="index.php?page=usuarios"
+                        class="btn btn-warning">
+
+                        Editar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 
-</div>
+<?php include '../app/Views/layouts/footer.php'; ?>

@@ -1,49 +1,118 @@
-<div class="container mt-4">
+<?php include '../app/Views/layouts/header.php'; ?>
+<?php include '../app/Views/layouts/navbar.php'; ?>
 
-<h2>Editar Usuario</h2>
+<div class="container-fluid">
 
-<form method="POST">
+    <div class="row">
 
-<input
-type="text"
-name="nombre"
-value="<?= $usuario['nombre']; ?>"
-class="form-control mb-2">
+        <?php include '../app/Views/layouts/sidebar.php'; ?>
 
-<input
-type="email"
-name="correo"
-value="<?= $usuario['correo']; ?>"
-class="form-control mb-2">
+        <div class="col-md-10 p-4">
 
-<select
-name="rol"
-class="form-select mb-3">
+            <div class="card">
 
-<option
-<?= $usuario['rol']=='Administrador'?'selected':'';?>>
-Administrador
-</option>
+                <div class="card-header">
+                    <h4>Editar Usuario</h4>
+                </div>
 
-<option
-<?= $usuario['rol']=='GestionEscolar'?'selected':'';?>>
-GestionEscolar
-</option>
+                <div class="card-body">
 
-<option
-<?= $usuario['rol']=='Alumno'?'selected':'';?>>
-Alumno
-</option>
+                    <form method="POST">
 
-</select>
+                        <div class="mb-3">
 
-<button
-class="btn btn-primary">
+                            <label class="form-label">
+                                Nombre
+                            </label>
 
-Actualizar
+                            <input
+                                type="text"
+                                name="nombre"
+                                value="<?= $usuario['nombre']; ?>"
+                                class="form-control"
+                                required>
 
-</button>
+                        </div>
 
-</form>
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Correo
+                            </label>
+
+                            <input
+                                type="email"
+                                name="correo"
+                                value="<?= $usuario['correo']; ?>"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Rol
+                            </label>
+
+                            <select
+                                name="rol"
+                                class="form-select">
+
+                                <option
+                                    value="Administrador"
+                                    <?= ($usuario['rol'] == 'Administrador') ? 'selected' : ''; ?>>
+
+                                    Administrador
+
+                                </option>
+
+                                <option
+                                    value="GestionEscolar"
+                                    <?= ($usuario['rol'] == 'GestionEscolar') ? 'selected' : ''; ?>>
+
+                                    Gestión Escolar
+
+                                </option>
+
+                                <option
+                                    value="Alumno"
+                                    <?= ($usuario['rol'] == 'Alumno') ? 'selected' : ''; ?>>
+
+                                    Alumno
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            Actualizar
+
+                        </button>
+
+                        <a
+                            href="index.php?page=usuarios"
+                            class="btn btn-secondary">
+
+                            Cancelar
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
+
+<?php include '../app/Views/layouts/footer.php'; ?>

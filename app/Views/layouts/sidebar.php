@@ -1,4 +1,4 @@
-<div class="col-md-2 bg-white border-end vh-100">
+<div class="bg-white border-end">
 
     <div class="list-group rounded-0">
 
@@ -42,15 +42,13 @@
 
         </a>
 
-        <?php
-        if (
+        <?php if(
             isset($_SESSION['rol']) &&
             (
                 $_SESSION['rol'] === 'Administrador' ||
                 $_SESSION['rol'] === 'GestionEscolar'
             )
-        ):
-        ?>
+        ): ?>
 
             <a
                 href="index.php?page=bitacora"

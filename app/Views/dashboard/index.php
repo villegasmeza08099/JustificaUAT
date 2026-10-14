@@ -16,6 +16,7 @@ include '../app/Views/layouts/navbar.php';
             <h2 class="mb-4">
                 Dashboard
             </h2>
+			
 
             <div class="row">
 
@@ -93,7 +94,7 @@ include '../app/Views/layouts/navbar.php';
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></scriptript>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
