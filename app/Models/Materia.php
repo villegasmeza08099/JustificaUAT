@@ -20,4 +20,24 @@ class Materia
         return $db->query($sql)
                   ->fetchAll(PDO::FETCH_ASSOC);
     }
+	
+	public static function obtenerPorCarrera(
+    $carreraId
+)
+{
+    $db = Database::connect();
+
+    $sql = "
+    SELECT *
+    FROM materias
+    WHERE carrera_id = ?
+    ORDER BY nombre
+    ";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute([$carreraId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }

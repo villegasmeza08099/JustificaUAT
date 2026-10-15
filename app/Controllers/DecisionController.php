@@ -222,7 +222,7 @@ class DecisionController
         $fechaAusencia,
         $fechaRegistro
     )
-    {
+	{
         $ausencia =
             new DateTime($fechaAusencia);
 
@@ -235,7 +235,15 @@ class DecisionController
         return $diferencia->days <= 5;
     }
 
-    /**
-     * Validar campos obligatorios
-     */
-    private function validarInformacion
+private function validarInformacion(
+    array $justificante
+)
+{
+    return
+        !empty($justificante['alumno_id']) &&
+        !empty($justificante['materia_id']) &&
+        !empty($justificante['fecha_ausencia']) &&
+        !empty($justificante['motivo']);
+}
+
+}

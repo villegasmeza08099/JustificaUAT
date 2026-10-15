@@ -56,7 +56,7 @@
                     </a>
 
                     <a
-                        href="index.php?page=usuarios"
+                        href="index.php?page=usuarios_edit&id=<?= $usuario['id']; ?>"
                         class="btn btn-warning">
 
                         Editar

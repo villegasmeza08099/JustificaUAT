@@ -18,7 +18,7 @@ class UsuarioController
         '/../Views/usuarios/index.php';
     }
 
-    public function create()
+    public function crear()
     {
         if(
             $_SERVER['REQUEST_METHOD']
@@ -39,8 +39,8 @@ class UsuarioController
                         PASSWORD_DEFAULT
                     ),
 
-                'rol' =>
-                    $_POST['rol']
+                'rol_id' =>
+                    $_POST['rol_id']
             ]);
 
             Bitacora::registrar(
@@ -87,8 +87,8 @@ class UsuarioController
                     'correo' =>
                         $_POST['correo'],
 
-                    'rol' =>
-                        $_POST['rol']
+                    'rol_id' =>
+                        $_POST['rol_id']
                 ]
             );
 

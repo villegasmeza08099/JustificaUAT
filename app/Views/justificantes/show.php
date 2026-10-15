@@ -1,49 +1,96 @@
-<div class="container mt-4">
+<?php include '../app/Views/layouts/header.php'; ?>
+<?php include '../app/Views/layouts/navbar.php'; ?>
 
-<div class="card">
+<div class="container-fluid">
 
-<div class="card-header">
+    <div class="row">
 
-Justificante
+        <?php include '../app/Views/layouts/sidebar.php'; ?>
 
-</div>
+        <div class="col-md-10 p-4">
 
-<div class="card-body">
+            <div class="card">
 
-<p>
+                <div class="card-header">
+                    <h4>Detalle del Justificante</h4>
+                </div>
 
-<strong>Folio:</strong>
+                <div class="card-body">
 
-<?= $justificante['folio']; ?>
+                    <p>
+                        <strong>Folio:</strong><br>
+                        <?= $justificante['folio']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Alumno:</strong><br>
+                        <?= $justificante['nombre_alumno']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Materia:</strong><br>
+                        <?= $justificante['materia']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Estado:</strong><br>
+                        <?= $justificante['estado']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Fecha de ausencia:</strong><br>
+                        <?= $justificante['fecha_ausencia']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Motivo:</strong><br>
+                        <?= $justificante['motivo']; ?>
+                    </p>
+
+                    <?php if(!empty($justificante['archivo_evidencia'])): ?>
+
+                        <p>
+    <strong>Evidencia:</strong><br>
+
+    <a
+        href="/JustificaUAT-MVC/storage/uploads/justificantes/<?= $justificante['archivo_evidencia']; ?>"
+        target="_blank"
+        class="btn  btn-info">
+		Ver Archivo
+
+    </a>
 
 </p>
 
-<p>
+                    <?php endif; ?>
 
-<strong>Estado:</strong>
+                    <a
+                        href="index.php?page=justificantes"
+                        class="btn btn-secondary">
 
-<?= $justificante['estado']; ?>
+                        Volver
 
-</p>
+                    </a>
+					
+					<?php if ($justificante['estado']!='Aprobado'): ?>
 
-<p>
+                    <a
+                        href="index.php?page=justificantes_edit&id=<?= $justificante['id']; ?>"
+                        class="btn btn-warning">
 
-<strong>Motivo:</strong>
+                        Editar
 
-<?= $justificante['motivo']; ?>
+                    </a>
+					<?php endif; ?>
 
-</p>
+                </div>
 
-<p>
+            </div>
 
-<strong>Fecha:</strong>
+        </div>
 
-<?= $justificante['fecha_ausencia']; ?>
-
-</p>
+    </div>
 
 </div>
 
-</div>
-
-</div>
+<?php include '../app/Views/layouts/footer.php'; ?>

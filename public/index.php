@@ -120,6 +120,15 @@ switch ($page) {
         (new JustificanteController())->delete();
 
         break;
+		
+		case 'justificantes_review':
+
+    require_once
+    '../app/Controllers/JustificanteController.php';
+
+    (new JustificanteController())->review();
+
+    break;
 
 
     /* ==========================

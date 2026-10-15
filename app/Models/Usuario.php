@@ -70,7 +70,7 @@ LIMIT 1
                     nombre,
                     correo,
                     password,
-                    rol,
+                    rol_id,
                     activo
                 )
                 VALUES
@@ -84,7 +84,7 @@ LIMIT 1
             $data['nombre'],
             $data['correo'],
             $data['password'],
-            $data['rol']
+            $data['rol_id']
         ]);
     }
 
@@ -95,21 +95,22 @@ LIMIT 1
     {
         $db = Database::connect();
 
-        $sql = "UPDATE usuarios
-                SET
-                    nombre=?,
-                    correo=?,
-                    rol=?
-                WHERE id=?";
+        $sql = "
+UPDATE usuarios
+SET
+    nombre=?,
+    correo=?,
+    rol_id=?
+WHERE id=?";
 
         $stmt = $db->prepare($sql);
 
         return $stmt->execute([
-            $data['nombre'],
-            $data['correo'],
-            $data['rol'],
-            $id
-        ]);
+    $data['nombre'],
+    $data['correo'],
+    $data['rol_id'],
+    $id
+]);
     }
 
     public static function eliminar($id)

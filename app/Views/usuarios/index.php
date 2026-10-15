@@ -1,7 +1,13 @@
 <?php include '../app/Views/layouts/header.php'; ?>
 <?php include '../app/Views/layouts/navbar.php'; ?>
 
-<div class="container mt-4">
+<div class="container-fluid">
+
+    <div class="row">
+
+        <?php include '../app/Views/layouts/sidebar.php'; ?>
+
+        <div class="col-md-10 p-4">
 
     <div class="d-flex justify-content-between">
 
@@ -104,6 +110,8 @@
 
     </table>
 
+</div>
+</div>
 </div>
 
 <?php include '../app/Views/layouts/footer.php'; ?>

@@ -1,53 +1,73 @@
 <?php include '../app/Views/layouts/header.php'; ?>
 <?php include '../app/Views/layouts/navbar.php'; ?>
 
-<div class="container mt-4">
+<div class="container-fluid">
 
-    <h2>Bitácora del Sistema</h2>
+    <div class="row">
 
-    <table class="table table-striped">
+        <?php include '../app/Views/layouts/sidebar.php'; ?>
 
-        <thead>
+        <div class="col-md-10 p-4">
 
-            <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Acción</th>
-                <th>Descripción</th>
-                <th>Módulo</th>
-                <th>IP</th>
-                <th>Fecha</th>
-            </tr>
+            <div class="card">
 
-        </thead>
+                <div class="card-header">
+                    <h4>Bitácora del Sistema</h4>
+                </div>
 
-        <tbody>
+                <div class="card-body">
 
-            <?php foreach($bitacoras as $b): ?>
+                    <table class="table table-striped table-bordered">
 
-            <tr>
+                        <thead class="table-dark">
 
-                <td><?= $b['id']; ?></td>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Acción</th>
+                                <th>Descripción</th>
+                                <th>Módulo</th>
+                                <th>IP</th>
+                                <th>Fecha</th>
+                            </tr>
 
-                <td><?= $b['usuario_id']; ?></td>
+                        </thead>
 
-                <td><?= $b['accion']; ?></td>
+                        <tbody>
 
-                <td><?= $b['descripcion']; ?></td>
+                            <?php foreach($bitacoras as $b): ?>
 
-                <td><?= $b['modulo']; ?></td>
+                            <tr>
 
-                <td><?= $b['ip']; ?></td>
+                                <td><?= $b['id']; ?></td>
 
-                <td><?= $b['fecha']; ?></td>
+                                <td><?= $b['usuario_id']; ?></td>
 
-            </tr>
+                                <td><?= $b['accion']; ?></td>
 
-            <?php endforeach; ?>
+                                <td><?= $b['descripcion']; ?></td>
 
-        </tbody>
+                                <td><?= $b['modulo']; ?></td>
 
-    </table>
+                                <td><?= $b['ip']; ?></td>
+
+                                <td><?= $b['fecha']; ?></td>
+
+                            </tr>
+
+                            <?php endforeach; ?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

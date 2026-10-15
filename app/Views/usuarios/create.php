@@ -1,75 +1,110 @@
-<div class="container mt-4">
+<?php include '../app/Views/layouts/header.php'; ?>
+<?php include '../app/Views/layouts/navbar.php'; ?>
 
-<h2>Nuevo Usuario</h2>
+<div class="container-fluid">
 
-<form method="POST">
+    <div class="row">
 
-<div class="mb-3">
+        <?php include '../app/Views/layouts/sidebar.php'; ?>
 
-<label>Nombre</label>
+        <div class="col-md-10 p-4">
 
-<input
-class="form-control"
-name="nombre"
-required>
+            <div class="card">
 
-</div>
+                <div class="card-header">
+                    <h4>Nuevo Usuario</h4>
+                </div>
 
-<div class="mb-3">
+                <div class="card-body">
 
-<label>Correo</label>
+                    <form method="POST">
 
-<input
-type="email"
-class="form-control"
-name="correo"
-required>
+                        <div class="mb-3">
 
-</div>
+                            <label class="form-label">
+                                Nombre
+                            </label>
 
-<div class="mb-3">
+                            <input
+                                type="text"
+                                name="nombre"
+                                class="form-control"
+                                required>
 
-<label>Contraseña</label>
+                        </div>
 
-<input
-type="password"
-class="form-control"
-name="password"
-required>
+                        <div class="mb-3">
 
-</div>
+                            <label class="form-label">
+                                Correo
+                            </label>
 
-<div class="mb-3">
+                            <input
+                                type="email"
+                                name="correo"
+                                class="form-control"
+                                required>
 
-<label>Rol</label>
+                        </div>
 
-<select
-name="rol"
-class="form-select">
+                        <div class="mb-3">
 
-<option>
-Administrador
-</option>
+                            <label class="form-label">
+                                Contraseña
+                            </label>
 
-<option>
-GestionEscolar
-</option>
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                required>
 
-<option>
-Alumno
-</option>
+                        </div>
 
-</select>
+                        <div class="mb-3">
 
-</div>
+                            <label class="form-label">
+                                Rol
+                            </label>
 
-<button
-class="btn btn-primary">
+                            <select
+                                name="rol_id"
+                                class="form-select">
 
-Guardar
+                                <option value="1">
+                                    Administrador
+                                </option>
 
-</button>
+                                <option value="2">
+                                    Gestión Escolar
+                                </option>
 
-</form>
+                                <option value="3">
+                                    Alumno
+                                </option>
 
-</div>
+                            </select>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            Guardar
+
+                        </button>
+
+
+
+<a
+        href="index.php?page=usuarios"
+        class="btn btn-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+        Cancelar
+
+    </a>
+	
+	</form>
+                       

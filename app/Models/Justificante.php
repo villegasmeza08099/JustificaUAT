@@ -13,10 +13,13 @@ SELECT
     j.*,
     a.nombre AS nombre_alumno,
     a.matricula,
+    c.nombre AS carrera,
     m.nombre AS materia
 FROM justificantes j
 INNER JOIN alumnos a
-    ON j.alumno_id = a.id
+    ON j.alumno_id =a.id
+INNER JOIN carreras c
+    ON a.carrera_id = c.id
 INNER JOIN materias m
     ON j.materia_id = m.id
 ORDER BY j.fecha_registro DESC
@@ -35,10 +38,13 @@ SELECT
     j.*,
     a.nombre AS nombre_alumno,
     a.matricula,
+    c.nombre AS carrera,
     m.nombre AS materia
 FROM justificantes j
 INNER JOIN alumnos a
     ON j.alumno_id = a.id
+INNER JOIN carreras c
+    ON a.carrera_id = c.id
 INNER JOIN materias m
     ON j.materia_id = m.id
 WHERE j.id = ?
@@ -183,7 +189,8 @@ VALUES
 SET
     materia_id=?,
     fecha_ausencia=?,
-    motivo=?
+    motivo=?,
+    archivo_evidencia=?
 WHERE id=?";
 
     $stmt = $db->prepare($sql);
@@ -192,6 +199,7 @@ WHERE id=?";
     $data['materia_id'],
     $data['fecha_ausencia'],
     $data['motivo'],
+    $data['archivo_evidencia'],
     $id
 ]);
 }
@@ -210,6 +218,37 @@ public static function eliminar(
     return $stmt->execute([
         $id
     ]);
+}
+
+public static function obtenerPorAlumno(
+    $alumnoId
+)
+{
+    $db = Database::connect();
+
+    $sql = "
+    SELECT
+        j.*,
+        a.nombre AS nombre_alumno,
+        a.matricula,
+        c.nombre AS carrera,
+        m.nombre AS materia
+    FROM justificantes j
+    INNER JOIN alumnos a
+        ON j.alumno_id = a.id
+    INNER JOIN carreras c
+        ON a.carrera_id = c.id
+    INNER JOIN materias m
+        ON j.materia_id = m.id
+    WHERE j.alumno_id = ?
+    ORDER BY j.fecha_registro DESC
+    ";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute([$alumnoId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 }

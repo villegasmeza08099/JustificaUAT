@@ -55,34 +55,50 @@
 
                                     <td><?= $j['materia']; ?></td>
 
-                                    <td><?= $j['estado']; ?></td>
-
                                     <td>
 
-                                        <a
-                                            href="index.php?page=justificantes_create"
-                                            class="btn btn-info btn-sm">
+<?php
+switch($j['estado'])
+{
+    case 'Aprobado':
+        echo '<span class="badge bg-success">Aprobado</span>';
+        break;
 
-                                            Ver
+    case 'Rechazado':
+        echo '<span class="badge bg-danger">Rechazado</span>';
+        break;
 
-                                        </a>
+    case 'Pendiente':
+        echo '<span class="badge bg-warning text-dark">Pendiente</span>';
+        break;
 
-                                        <a
-                                            href="index.php?page=justificantes_create"
-                                            class="btn btn-warning btn-sm">
+    case 'Correccion':
+        echo '<span class="badge bg-info text-dark">Corrección</span>';
+        break;
 
-                                            Editar
+    case 'RevisionEspecial':
+        echo '<span class="badge bg-secondary">Revisión Especial</span>';
+        break;
+}
+?>
 
-                                        </a>
+</td>
 
-                         <a
-    href="index.php?page=decision_evaluar&id=<?= $j['id']; ?>"
-    class="btnn-sm">
-
-    Evaluar
-
-</a>
-
+                                    <td>
+									
+                                       <?php if($_SESSION['rol'] == 'Alumno' || $_SESSION['rol'] == 'GestionEscolar'|| $_SESSION['rol'] == 'Administrador'):?>  
+                                        <a href="index.php?page=justificantes_show&id=<?= $j['id']; ?>" class="btn btn-info btn-sm">Ver</a>
+										<?php endif; ?>
+										
+										<?php if($j['estado'] === 'Pendiente' || $j['estado'] === 'Correccion'): ?>
+										
+                                        <a href="index.php?page=justificantes_edit&id=<?= $j['id']; ?>"  class="btn btn-warning btn-sm">Editar</a>
+										<?php endif; ?>
+                                           
+										   <?php if($_SESSION['rol'] == 'GestionEscolar'|| $_SESSION['rol'] == 'Administrador' && $j['estado'] != 'Aprobado'): ?>
+                                           <a href="index.php?page=justificantes_review&id=<?= $j['id']; ?>" class="btn btn-primary btn-sm"> Evaluar </a>
+                                          <?php endif; ?>
+                                           <a href="index.php?page=justificantes_delete&id=<?= $j['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar este justificante?');">Eliminar</a>
                                     </td>
 
                                 </tr>

@@ -114,30 +114,58 @@ foreach($graficaEstados as $e){
 ?>
 ];
 
+const colores = estados.map(estado => {
+
+    switch(estado)
+    {
+        case 'Aprobado':
+            return '#198754';
+
+        case 'Rechazado':
+            return '#dc3545';
+
+        case 'Pendiente':
+            return '#ffc107';
+
+        case 'Correccion':
+            return '#0dcaf0';
+
+        case 'RevisionEspecial':
+            return '#6c757d';
+
+        default:
+            return '#0d6efd';
+    }
+
+});
+
 new Chart(
     document.getElementById('graficaEstados'),
     {
         type: 'bar',
 
         data: {
-
             labels: estados,
 
-            datasets: [
-                {
-                    label: 'Justificantes',
+            datasets: [{
+                label: 'Justificantes',
+                data: cantidades,
+                backgroundColor: colores,
+                borderWidth: 1
+            }]
+        },
 
-                    data: cantidades,
+        options: {
+            responsive: true,
 
-                    backgroundColor: [
-                        '#198754',
-                        '#dc3545',
-                        '#ffc107',
-                        '#0dcaf0',
-                        '#6c757d'
-                    ]
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
                 }
-            ]
+            }
         }
     }
 );

@@ -44,3 +44,21 @@ function usuarioActual(): ?array
         $_SESSION['rol']
     ];
 }
+
+function esAdmin()
+{
+    return isset($_SESSION['rol']) &&
+           $_SESSION['rol'] === 'Administrador';
+}
+
+function esGestionEscolar()
+{
+    return isset($_SESSION['rol']) &&
+           $_SESSION['rol'] === 'GestionEscolar';
+}
+
+function esAlumno()
+{
+    return isset($_SESSION['rol']) &&
+           $_SESSION['rol'] === 'Alumno';
+}

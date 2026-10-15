@@ -23,20 +23,65 @@
                         enctype="multipart/form-data"
                     >
 
-                    
-                        <div class="mb-3">
+                    <?php if(esAlumno()): ?>
 
-                            <select
-    name="alumno_id"
+<div class="mb-3">
+
+    <label class="form-label">
+        Alumno
+    </label>
+
+    <input
+        type="text"
+        class="form-control"
+        value="<?= $alumno['nombre']; ?>"
+        readonly>
+
+</div>
+
+<div class="mb-3">
+
+    <label class="form-label">
+        Matrícula
+    </label>
+
+    <input
+        type="text"
+        class="form-control"
+        value="<?= $alumno['matricula']; ?>"
+        readonly>
+
+</div>
+<div class="mb-3">
+
+    <label class="form-label">
+        Carrera
+    </label>
+
+    <input
+        type="text"
+        class="form-control"
+        value="<?= $alumno['carrera']; ?>"
+        readonly>
+
+</div>
+
+<?php endif; ?>
+
+<?php if(!esAlumno()): ?>
+
+<select
     id="alumno_id"
+    name="alumno_id"
     class="form-select">
 
     <?php foreach($alumnos as $a): ?>
 
         <option
             value="<?= $a['id']; ?>"
-            data-carrera="<?= $a['carrera']; ?>"
+			 data-carrera="<?= $a['carrera']; ?>"
             data-carrera-id="<?= $a['carrera_id']; ?>">
+			
 
             <?= $a['matricula']; ?>
             -
@@ -48,21 +93,48 @@
 
 </select>
 
-                        </div>
-
-                        <div class="mb-3">
+<div class="mb-3">
 
     <label class="form-label">
         Carrera
     </label>
 
     <input
-    type="text"
-    id="carrera"
-    class="form-control"
-    readonly>
+        type="text"
+        id="carrera"
+        class="form-control"
+        readonly>
 
 </div>
+
+<?php endif; ?>
+                        
+<!-- <div class="mb-3">
+                            <select
+    name="alumno_id"
+    id="alumno_id"
+    class="form-select">
+
+    <?php // foreach($alumnos as $a): ?>
+
+        <option
+            value="<?//= $a['id']; ?>"
+            data-carrera="<?//= $a['carrera']; ?>"
+            data-carrera-id="<?//= $a['carrera_id']; ?>">
+
+            <?//= $a['matricula']; ?>
+            -
+            <?//= $a['nombre']; ?>
+
+        </option>
+
+    <?php //endforeach; ?>
+
+</select></div>  -->
+
+                        
+
+                        
 
                         <div class="mb-3">
 

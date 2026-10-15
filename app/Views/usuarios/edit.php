@@ -56,34 +56,34 @@
                             </label>
 
                             <select
-                                name="rol"
-                                class="form-select">
+    name="rol_id"
+    class="form-select">
 
-                                <option
-                                    value="Administrador"
-                                    <?= ($usuario['rol'] == 'Administrador') ? 'selected' : ''; ?>>
+    <option
+        value="1"
+        <?= ($usuario['rol_id'] == 1) ? 'selected' : ''; ?>>
 
-                                    Administrador
+        Administrador
 
-                                </option>
+    </option>
 
-                                <option
-                                    value="GestionEscolar"
-                                    <?= ($usuario['rol'] == 'GestionEscolar') ? 'selected' : ''; ?>>
+    <option
+        value="2"
+        <?= ($usuario['rol_id'] == 2) ? 'selected' : ''; ?>>
 
-                                    Gestión Escolar
+        Gestión Escolar
 
-                                </option>
+    </option>
 
-                                <option
-                                    value="Alumno"
-                                    <?= ($usuario['rol'] == 'Alumno') ? 'selected' : ''; ?>>
+    <option
+        value="3"
+        <?= ($usuario['rol_id'] == 3) ? 'selected' : ''; ?>>
 
-                                    Alumno
+        Alumno
 
-                                </option>
+    </option>
 
-                            </select>
+</select>
 
                         </div>
 
