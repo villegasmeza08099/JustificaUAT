@@ -68,9 +68,10 @@
                             </label>
 
                             <select
-                                name="rol_id"
+                                id="rol_id"
+								name="rol_id"
                                 class="form-select">
-
+                                 
                                 <option value="1">
                                     Administrador
                                 </option>
@@ -86,14 +87,50 @@
                             </select>
 
                         </div>
+						
+	<div id="datosAlumno" style="display:none;">
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary">
+    <div class="mb-3">
 
-                            Guardar
+        <label class="form-label">
+            Matrícula
+        </label>
 
-                        </button>
+        <input
+            type="text"
+            name="matricula"
+            class="form-control">
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Carrera
+        </label>
+
+        <select
+            name="carrera_id"
+            class="form-select">
+
+            <?php foreach($carreras as $c): ?>
+
+                <option
+                    value="<?= $c['id']; ?>">
+
+                    <?= $c['nombre']; ?>
+
+                </option>
+
+            <?php endforeach; ?>
+
+        </select>
+
+    </div>
+
+</div>
+						
+	<button type="submit" class="btn btn-primary">Guardar</button>
 
 
 
@@ -107,4 +144,4 @@
     </a>
 	
 	</form>
-                       
+   

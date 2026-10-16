@@ -6,6 +6,8 @@ __DIR__.'/../Models/Usuario.php';
 require_once
 __DIR__.'/../Models/Bitacora.php';
 
+require_once __DIR__ . '/../Models/Alumno.php';
+
 class UsuarioController
 {
     public function index()
@@ -20,28 +22,33 @@ class UsuarioController
 
     public function crear()
     {
+		
+		
         if(
             $_SERVER['REQUEST_METHOD']
             ===
             'POST'
         ){
 
-            Usuario::crear([
-                'nombre' =>
-                    $_POST['nombre'],
-
-                'correo' =>
-                    $_POST['correo'],
-
-                'password' =>
-                    password_hash(
-                        $_POST['password'],
-                        PASSWORD_DEFAULT
-                    ),
-
-                'rol_id' =>
-                    $_POST['rol_id']
-            ]);
+            $usuarioId = Usuario::crear([
+    'nombre' => $_POST['nombre'],
+    'correo' => $_POST['correo'],
+    'password' => password_hash(
+        $_POST['password'],
+        PASSWORD_DEFAULT
+    ),
+    'rol_id' => $_POST['rol_id']
+]);
+			
+			if ($_POST['rol_id'] == 3)
+{
+    Alumno::crear([
+        'matricula'  => $_POST['matricula'],
+        'nombre'     => $_POST['nombre'],
+        'carrera_id' => $_POST['carrera_id'],
+        'usuario_id' => $usuarioId
+    ]);
+}
 
             Bitacora::registrar(
                 $_SESSION['usuario_id'],
@@ -62,9 +69,11 @@ class UsuarioController
             exit;
         }
 
-        require_once
-        __DIR__ .
-        '/../Views/usuarios/create.php';
+require_once __DIR__ . '/../Models/Carrera.php';
+		
+		$carreras = Carrera::obtenerTodas();
+        require_once __DIR__ . '/../Views/usuarios/create.php';
+		
     }
 
     public function editar()

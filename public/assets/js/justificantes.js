@@ -61,89 +61,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener(
+    'DOMContentLoaded',
+    function(){
 
-    const alumno = document.getElementById('alumno_id');
-    const carrera = document.getElementById('carrera');
+        const rol =
+            document.getElementById('rol_id');
 
-    console.log(alumno);
-    console.log(carrera);
+        const bloque =
+            document.getElementById('datosAlumno');
 
-    function actualizarCarrera() {
-
-        let opcion =
-            alumno.options[
-                alumno.selectedIndex
-            ];
-
-        console.log(opcion);
-        console.log(opcion.dataset.carrera);
-
-        carrera.value =
-            opcion.dataset.carrera || '';
-    }
-
-    alumno.addEventListener(
-        'change',
-        actualizarCarrera
-    );
-
-    actualizarCarrera();
-
-});
-
-
-
-document.addEventListener('DOMContentLoaded', function(){
-
-    const alumno =
-        document.getElementById('alumno_id');
-
-    const carrera =
-        document.getElementById('carrera');
-
-    function actualizarCarrera()
-    {
-        let opcion =
-            alumno.options[
-                alumno.selectedIndex
-            ];
-
-        carrera.value =
-            opcion.dataset.carrera || '';
-    }
-
-    alumno.addEventListener(
-        'change',
-        actualizarCarrera
-    );
-
-    actualizarCarrera();
-});
-
-
-
-document.addEventListener('DOMContentLoaded', function(){
-
-    const alumno =
-        document.getElementById('alumno_id');
-
-    const carrera =
-        document.getElementById('carrera');
-
-    alumno.addEventListener(
-        'change',
-        function(){
-
-            let opcion =
-                this.options[
-                    this.selectedIndex
-                ];
-
-            carrera.value =
-                opcion.dataset.carrera || '';
-
+        function actualizar()
+        {
+            if(rol.value == 3)
+            {
+                bloque.style.display = 'block';
+            }
+            else
+            {
+                bloque.style.display = 'none';
+            }
         }
-    );
 
-});
+        rol.addEventListener(
+            'change',
+            actualizar
+        );
+
+        actualizar();
+    }
+);

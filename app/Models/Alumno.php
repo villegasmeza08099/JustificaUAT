@@ -48,6 +48,34 @@ ORDER BY a.nombre
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+public static function crear($data)
+{
+    $db = Database::connect();
+
+    $sql = "
+    INSERT INTO alumnos
+    (
+        matricula,
+        nombre,
+        carrera_id,
+        usuario_id
+    )
+    VALUES
+    (
+        ?, ?, ?, ?
+    )
+    ";
+
+    $stmt = $db->prepare($sql);
+
+    return $stmt->execute([
+        $data['matricula'],
+        $data['nombre'],
+        $data['carrera_id'],
+        $data['usuario_id']
+    ]);
+}
 	
 	
 }

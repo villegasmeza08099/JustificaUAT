@@ -80,12 +80,14 @@ LIMIT 1
 
         $stmt = $db->prepare($sql);
 
-        return $stmt->execute([
+        $stmt->execute([
             $data['nombre'],
             $data['correo'],
             $data['password'],
             $data['rol_id']
         ]);
+		
+		return $db->lastInsertId();
     }
 
     public static function actualizar(
