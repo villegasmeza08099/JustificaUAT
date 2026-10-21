@@ -2,29 +2,27 @@
 
 class DecisionEngine
 {
-    public static function evaluar(
-        bool $documentoPresentado,
-        bool $documentoValido,
-        bool $entregadoATiempo,
-        bool $informacionCompleta
-    )
+    public static function evaluar(bool $documentoPresentado,bool $documentoValido,bool $entregadoATiempo,bool $informacionCompleta)
     {
-        if (!$documentoPresentado) {
+        if (!$documentoPresentado) 
+		{
             return 'Rechazado';
         }
 
-        if (!$documentoValido) {
+        if (!$documentoValido) 
+		{
             return 'Rechazado';
         }
 
-        if (!$entregadoATiempo) {
+        if (!$entregadoATiempo) 
+		{
             return 'RevisionEspecial';
         }
 
-        if (!$informacionCompleta) {
+        if (!$informacionCompleta) 
+		{
             return 'Correccion';
         }
-
         return 'Aprobado';
     }
 }

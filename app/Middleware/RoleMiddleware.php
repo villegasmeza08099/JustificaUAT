@@ -2,47 +2,27 @@
 
 class RoleMiddleware
 {
-    public static function handle(
-        string $rol
-    )
+    public static function handle(string $rol)
     {
-        if (
-            !isset($_SESSION['rol'])
-        ) {
+        if (!isset($_SESSION['rol'])) 
+		{
 
-            header(
-                'Location: login.php'
-            );
-
+            header('Location: login.php');
             exit;
         }
 
-        if (
-            $_SESSION['rol']
-            !==
-            $rol
-        ) {
+        if ($_SESSION['rol'] !== $rol ) 
+		{
 
-            die(
-                'Acceso denegado.'
-            );
+            die('Acceso denegado.');
         }
     }
 
-    public static function allow(
-        array $roles
-    )
+    public static function allow(array $roles)
     {
-        if (
-            !in_array(
-                $_SESSION['rol'],
-                $roles
-            )
-        ) {
-
-            die(
-                'No tiene permisos.'
-            );
+        if (!in_array($_SESSION['rol'],$roles)) 
+		{
+            die('No tiene permisos.');
         }
     }
 }

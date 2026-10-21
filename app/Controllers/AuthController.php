@@ -7,33 +7,32 @@ class AuthController
 {
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') 
+		{
             return;
         }
 
         $correo = trim($_POST['correo'] ?? '');
         $password = $_POST['password'] ?? '';
 		
-	//	echo "Correo recibido: " . $correo . "<br>";
-		
-
-        $usuario = Usuario::buscarPorCorreo($correo);
-        //var_dump($usuario);
-       // die();
-
-        if (!$usuario) {
+	    $usuario = Usuario::buscarPorCorreo($correo);
+    
+        if (!$usuario) 
+		{
             $_SESSION['error'] = 'Usuario no encontrado.';
             header('Location: login.php');
             exit;
         }
 
-        if (!password_verify($password, $usuario['password'])) {
+        if (!password_verify($password, $usuario['password'])) 
+		{
             $_SESSION['error'] = 'Contraseña incorrecta.';
             header('Location: login.php');
             exit;
         }
 
-        if (!$usuario['activo']) {
+        if (!$usuario['activo']) 
+		{
             $_SESSION['error'] = 'Usuario deshabilitado.';
             header('Location: login.php');
             exit;
@@ -47,8 +46,6 @@ class AuthController
 		
 		Bitacora::registrar($usuario['id'],'Inicio de sesión','Acceso al sistema');
 		
-
-
         header('Location: index.php?page=dashboard');
         exit;
     }

@@ -7,162 +7,117 @@ class Justificante
     public static function obtenerTodos()
     {
         $db = Database::connect();
-
-        $sql = "
-SELECT
-    j.*,
-    a.nombre AS nombre_alumno,
-    a.matricula,
-    c.nombre AS carrera,
-    m.nombre AS materia
-FROM justificantes j
-INNER JOIN alumnos a
-    ON j.alumno_id =a.id
-INNER JOIN carreras c
-    ON a.carrera_id = c.id
-INNER JOIN materias m
-    ON j.materia_id = m.id
-ORDER BY j.fecha_registro DESC
-";
-
-        return $db->query($sql)
-                  ->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT
+                j.*,
+                a.nombre AS nombre_alumno,
+                a.matricula,
+                c.nombre AS carrera,
+                m.nombre AS materia
+                FROM justificantes j
+                INNER JOIN alumnos a
+                ON j.alumno_id =a.id
+                INNER JOIN carreras c
+                ON a.carrera_id = c.id
+                INNER JOIN materias m
+                ON j.materia_id = m.id
+                ORDER BY j.fecha_registro DESC";
+        return $db->query($sql) ->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function obtenerPorId($id)
     {
         $db = Database::connect();
 
-        $sql = "
-SELECT
-    j.*,
-    a.nombre AS nombre_alumno,
-    a.matricula,
-    c.nombre AS carrera,
-    m.nombre AS materia
-FROM justificantes j
-INNER JOIN alumnos a
-    ON j.alumno_id = a.id
-INNER JOIN carreras c
-    ON a.carrera_id = c.id
-INNER JOIN materias m
-    ON j.materia_id = m.id
-WHERE j.id = ?
-";
-
+        $sql = "SELECT
+                j.*,
+                a.nombre AS nombre_alumno,
+                a.matricula,
+                c.nombre AS carrera,
+                m.nombre AS materia
+                FROM justificantes j
+                INNER JOIN alumnos a
+                ON j.alumno_id = a.id
+                INNER JOIN carreras c
+                ON a.carrera_id = c.id
+                INNER JOIN materias m
+                ON j.materia_id = m.id
+                WHERE j.id = ?";
         $stmt = $db->prepare($sql);
-
         $stmt->execute([$id]);
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public static function crear($data)
     {
         $db = Database::connect();
-
-        $folio =
-            'JUS-' .
-            date('YmdHis');
-
-        $sql = "
-INSERT INTO justificantes
-(
-    folio,
-    alumno_id,
-    materia_id,
-    fecha_ausencia,
-    motivo,
-    archivo_evidencia,
-    estado
-)
-VALUES
-(
-    ?,?,?,?,?,?,
-    'Pendiente'
-)";
+        $folio =  'JUS-' .  date('YmdHis');
+        $sql = "INSERT INTO justificantes
+                (
+                 folio,
+                 alumno_id,
+                 materia_id,
+                 fecha_ausencia,
+                 motivo,
+                 archivo_evidencia,
+                 estado
+                )
+                VALUES
+               (
+                ?,?,?,?,?,?,'Pendiente')";
 
         $stmt = $db->prepare($sql);
-
-        return $stmt->execute([
-    $folio,
-    $data['alumno_id'],
-    $data['materia_id'],
-    $data['fecha_ausencia'],
-    $data['motivo'],
-    $data['archivo_evidencia'] ?? null
-]);
+        return $stmt->execute([$folio,
+                              $data['alumno_id'],
+                              $data['materia_id'],
+                              $data['fecha_ausencia'],
+                              $data['motivo'],
+                              $data['archivo_evidencia'] ?? null]);
     }
 
-    public static function cambiarEstado(
-        $id,
-        $estado
-    )
+    public static function cambiarEstado($id,$estado)
     {
         $db = Database::connect();
-
         $sql = "
             UPDATE justificantes
             SET estado = ?
-            WHERE id = ?
-        ";
+            WHERE id = ?";
 
         $stmt = $db->prepare($sql);
-
-        return $stmt->execute([
-            $estado,
-            $id
-        ]);
+        return $stmt->execute([$estado,$id]);
     }
 
     public static function contarTodos()
     {
         $db = Database::connect();
-
-        return $db->query(
-            "SELECT COUNT(*) FROM justificantes"
-        )->fetchColumn();
+        return $db->query("SELECT COUNT(*) FROM justificantes")->fetchColumn();
     }
 
-    public static function contarPorEstado(
-        $estado
-    )
+    public static function contarPorEstado($estado)
     {
         $db = Database::connect();
-
-        $sql =
-        "SELECT COUNT(*)
-        FROM justificantes
-        WHERE estado=?";
-
+        $sql = "SELECT COUNT(*)
+                FROM justificantes
+                WHERE estado=?";
         $stmt = $db->prepare($sql);
-
         $stmt->execute([$estado]);
-
         return $stmt->fetchColumn();
     }
 
-    public static function guardarDecision(
-        $data
-    )
+    public static function guardarDecision($data)
     {
         $db = Database::connect();
-
-        $sql = "
-        INSERT INTO decisiones
-        (
-          justificante_id,
-          documento_presentado,
-          documento_valido,
-          entregado_tiempo,
-          informacion_completa,
-          resultado,
-          usuario_id
-        )
-        VALUES
-        (
-          ?,?,?,?,?,?,?
-        )";
+        $sql = "INSERT INTO decisiones
+                (
+                 justificante_id,
+                 documento_presentado,
+                 documento_valido,
+                 entregado_tiempo,
+                 informacion_completa,
+                 resultado,
+                 usuario_id
+                )
+                VALUES
+               (?,?,?,?,?,?,? )";
 
         $stmt = $db->prepare($sql);
 
@@ -173,26 +128,20 @@ VALUES
             $data['entregado_tiempo'],
             $data['informacion_completa'],
             $data['resultado'],
-            $data['usuario_id']
-        ]);
+            $data['usuario_id']]);
     }
 	
-	public static function actualizar(
-    int $id,
-    array $data
-)
+	public static function actualizar(int $id,array $data)
 {
     $db = Database::connect();
 
-    $sql = "
-    UPDATE justificantes
-SET
-    materia_id=?,
-    fecha_ausencia=?,
-    motivo=?,
-    archivo_evidencia=?
-WHERE id=?";
-
+    $sql = "UPDATE justificantes
+            SET
+            materia_id=?,
+            fecha_ausencia=?,
+            motivo=?,
+            archivo_evidencia=?
+            WHERE id=?";
     $stmt = $db->prepare($sql);
 
     return $stmt->execute([
@@ -200,32 +149,20 @@ WHERE id=?";
     $data['fecha_ausencia'],
     $data['motivo'],
     $data['archivo_evidencia'],
-    $id
-]);
+    $id]);
 }
 
-public static function eliminar(
-    int $id
-)
+public static function eliminar(int $id)
 {
     $db = Database::connect();
 
-    $stmt = $db->prepare(
-        "DELETE FROM justificantes
-         WHERE id=?"
-    );
-
-    return $stmt->execute([
-        $id
-    ]);
+    $stmt = $db->prepare("DELETE FROM justificantes WHERE id=?");
+    return $stmt->execute([$id]);
 }
 
-public static function obtenerPorAlumno(
-    $alumnoId
-)
+public static function obtenerPorAlumno($alumnoId)
 {
     $db = Database::connect();
-
     $sql = "
     SELECT
         j.*,
@@ -245,9 +182,7 @@ public static function obtenerPorAlumno(
     ";
 
     $stmt = $db->prepare($sql);
-
     $stmt->execute([$alumnoId]);
-
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 

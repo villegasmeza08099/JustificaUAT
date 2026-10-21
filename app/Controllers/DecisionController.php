@@ -6,12 +6,10 @@ require_once __DIR__ . '/../Models/Bitacora.php';
 
 class DecisionController
 {
-    /**
-     * Evalúa automáticamente un justificante
-     */
     public function evaluar()
     {
-        if (!isset($_GET['id'])) {
+        if (!isset($_GET['id'])) 
+		{
             $_SESSION['error'] = 'No se especificó el justificante.';
             header('Location: index.php?page=justificantes');
             exit;
@@ -21,223 +19,119 @@ class DecisionController
 
         $justificante = Justificante::obtenerPorId($id);
 
-        if (!$justificante) {
+        if (!$justificante) 
+		{
             $_SESSION['error'] = 'Justificante no encontrado.';
             header('Location: index.php?page=justificantes');
             exit;
         }
 
-        $documentoPresentado =
-            !empty($justificante['archivo_evidencia']);
+        $documentoPresentado = !empty($justificante['archivo_evidencia']);
 
-        $documentoValido =
-            $this->validarDocumento(
-                $justificante['archivo_evidencia']
-            );
+        $documentoValido = $this->validarDocumento($justificante['archivo_evidencia']);
 
-        $entregadoATiempo =
-            $this->validarTiempoEntrega(
-                $justificante['fecha_ausencia'],
-                $justificante['fecha_registro']
-            );
+        $entregadoATiempo = $this->validarTiempoEntrega($justificante['fecha_ausencia'],$justificante['fecha_registro']);
 
-        $informacionCompleta =
-            $this->validarInformacion(
-                $justificante
-            );
+        $informacionCompleta = $this->validarInformacion($justificante);
 
-        $resultado =
-            DecisionEngine::evaluar(
-                $documentoPresentado,
-                $documentoValido,
-                $entregadoATiempo,
-                $informacionCompleta
-            );
+        $resultado = DecisionEngine::evaluar($documentoPresentado,$documentoValido,$entregadoATiempo,$informacionCompleta);
 
-        Justificante::cambiarEstado(
-            $id,
-            $resultado
-        );
+        Justificante::cambiarEstado($id,$resultado);
 
-        Justificante::guardarDecision([
-            'justificante_id'      => $id,
-            'documento_presentado' => $documentoPresentado,
-            'documento_valido'     => $documentoValido,
-            'entregado_tiempo'     => $entregadoATiempo,
-            'informacion_completa' => $informacionCompleta,
-            'resultado'            => $resultado,
-            'usuario_id'           => $_SESSION['usuario_id']
+        Justificante::guardarDecision(
+		['justificante_id'      => $id,
+		 'documento_presentado' => $documentoPresentado,
+         'documento_valido'     => $documentoValido,
+         'entregado_tiempo'     => $entregadoATiempo,
+         'informacion_completa' => $informacionCompleta,
+         'resultado'            => $resultado,
+         'usuario_id'           => $_SESSION['usuario_id']
         ]);
 
-        Bitacora::registrar(
-            $_SESSION['usuario_id'],
-            'Evaluación automática de justificante',
-            "Justificante #{$id} => {$resultado}"
-        );
+        Bitacora::registrar($_SESSION['usuario_id'],'Evaluación automática de justificante',"Justificante #{$id} => {$resultado}");
 		
-		Bitacora::registrar(
-    $_SESSION['usuario_id'],
-    'Evaluación',
-    'Resultado: '.$resultado
-);
+		Bitacora::registrar($_SESSION['usuario_id'],'Evaluación','Resultado: '.$resultado);
 
-        $_SESSION['success'] =
-            "Justificante evaluado correctamente.";
+        $_SESSION['success'] = "Justificante evaluado correctamente.";
 
-        header(
-            'Location: index.php?page=justificantes'
-        );
-
+        header('Location: index.php?page=justificantes');
         exit;
     }
 
-    /**
-     * Aprobación manual
-     */
     public function aprobar()
     {
         $id = (int)$_GET['id'];
 
-        Justificante::cambiarEstado(
-            $id,
-            'Aprobado'
-        );
+        Justificante::cambiarEstado($id,'Aprobado');
 
-        Bitacora::registrar(
-            $_SESSION['usuario_id'],
-            'Aprobación manual',
-            "Justificante #{$id}"
-        );
+        Bitacora::registrar($_SESSION['usuario_id'],'Aprobación manual',"Justificante #{$id}");
 
-        header(
-            'Location: index.php?page=justificantes'
-        );
+        header('Location: index.php?page=justificantes');
     }
 
-    /**
-     * Rechazo manual
-     */
     public function rechazar()
     {
         $id = (int)$_GET['id'];
+        Justificante::cambiarEstado($id,'Rechazado');
 
-        Justificante::cambiarEstado(
-            $id,
-            'Rechazado'
-        );
+        Bitacora::registrar($_SESSION['usuario_id'],'Rechazo manual',"Justificante #{$id}");
 
-        Bitacora::registrar(
-            $_SESSION['usuario_id'],
-            'Rechazo manual',
-            "Justificante #{$id}"
-        );
-
-        header(
-            'Location: index.php?page=justificantes'
-        );
+        header('Location: index.php?page=justificantes');
     }
 
-    /**
-     * Solicitar corrección
-     */
     public function solicitarCorreccion()
     {
         $id = (int)$_GET['id'];
 
-        Justificante::cambiarEstado(
-            $id,
-            'Correccion'
-        );
+        Justificante::cambiarEstado($id,'Correccion');
 
-        Bitacora::registrar(
-            $_SESSION['usuario_id'],
-            'Solicitud de corrección',
-            "Justificante #{$id}"
-        );
+        Bitacora::registrar($_SESSION['usuario_id'],'Solicitud de corrección',"Justificante #{$id}");
 
-        header(
-            'Location: index.php?page=justificantes'
-        );
+        header('Location: index.php?page=justificantes');
     }
 
-    /**
-     * Revisión especial
-     */
     public function revisionEspecial()
     {
         $id = (int)$_GET['id'];
 
-        Justificante::cambiarEstado(
-            $id,
-            'RevisionEspecial'
-        );
+        Justificante::cambiarEstado($id,'RevisionEspecial');
 
-        Bitacora::registrar(
-            $_SESSION['usuario_id'],
-            'Revisión especial',
-            "Justificante #{$id}"
-        );
+        Bitacora::registrar($_SESSION['usuario_id'],'Revisión especial',"Justificante #{$id}");
 
-        header(
-            'Location: index.php?page=justificantes'
-        );
+        header('Location: index.php?page=justificantes');
     }
 
-    /**
-     * Validar archivo
-     */
-    private function validarDocumento(
-        $archivo
-    )
+    private function validarDocumento($archivo)
     {
-        if (!$archivo) {
-            return false;
-        }
+        if (!$archivo) 
+		{
+			return false;
+		}
 
-        $extension =
-            strtolower(
-                pathinfo(
-                    $archivo,
-                    PATHINFO_EXTENSION
-                )
-            );
+        $extension = strtolower(pathinfo($archivo,PATHINFO_EXTENSION));
 
-        $permitidos = [
+        $permitidos = 
+		[
             'pdf',
             'jpg',
             'jpeg',
             'png'
         ];
 
-        return in_array(
-            $extension,
-            $permitidos
-        );
+        return in_array($extension,$permitidos);
     }
 
-    /**
-     * Validar fecha límite
-     */
-    private function validarTiempoEntrega(
-        $fechaAusencia,
-        $fechaRegistro
-    )
+    private function validarTiempoEntrega($fechaAusencia,$fechaRegistro)
 	{
-        $ausencia =
-            new DateTime($fechaAusencia);
+        $ausencia = new DateTime($fechaAusencia);
 
-        $registro =
-            new DateTime($fechaRegistro);
+        $registro = new DateTime($fechaRegistro);
 
-        $diferencia =
-            $ausencia->diff($registro);
-
+        $diferencia = $ausencia->diff($registro);
         return $diferencia->days <= 5;
     }
 
-private function validarInformacion(
-    array $justificante
-)
+private function validarInformacion(array $justificante)
 {
     return
         !empty($justificante['alumno_id']) &&

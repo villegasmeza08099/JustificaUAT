@@ -38,8 +38,6 @@ class DashboardController
         $graficaEstados =
             Reporte::justificantesPorEstado();
 
-        require_once
-        __DIR__ .
-        '/../Views/dashboard/index.php';
+        require_once __DIR__ . '/../Views/dashboard/index.php';
     }
 }

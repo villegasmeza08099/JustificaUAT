@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../Models/Justificante.php';
 require_once __DIR__ . '/../Models/DecisionEngine.php';
 require_once __DIR__ . '/../Models/Bitacora.php';
@@ -13,35 +12,26 @@ class JustificanteController
     {
 		if(esAlumno())
     {
-        $alumno =
-            Alumno::obtenerPorUsuario(
-                $_SESSION['usuario_id']
-            );
+        $alumno = Alumno::obtenerPorUsuario($_SESSION['usuario_id']);
 
-        $justificantes =
-            Justificante::obtenerPorAlumno(
-                $alumno['id']
-            );
+        $justificantes = Justificante::obtenerPorAlumno($alumno['id']);
     }
     else
     {
-        $justificantes =
-            Justificante::obtenerTodos();
+        $justificantes = Justificante::obtenerTodos();
     }
 
-    require_once
-    __DIR__ .
-    '/../Views/justificantes/index.php';
+         require_once __DIR__ . '/../Views/justificantes/index.php';
     }
 
     public function crear()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+		{
             $archivo = null;
 
-            if (!empty($_FILES['evidencia']['name'])) {
-
+            if (!empty($_FILES['evidencia']['name'])) 
+			{
                 $nombreArchivo = time() . '_' . basename($_FILES['evidencia']['name']);
 
                 move_uploaded_file($_FILES['evidencia']['tmp_name'],__DIR__ .'/../../storage/uploads/justificantes/' .$nombreArchivo);
@@ -50,54 +40,38 @@ class JustificanteController
             }
 
             Justificante::crear([
-    'alumno_id' => $_POST['alumno_id'],
-    'materia_id' => $_POST['materia_id'],
-    'fecha_ausencia' => $_POST['fecha_ausencia'],
-    'motivo' => $_POST['motivo'],
-    'archivo_evidencia' => $archivo
-]);
+                    'alumno_id' => $_POST['alumno_id'],
+                    'materia_id' => $_POST['materia_id'],
+                    'fecha_ausencia' => $_POST['fecha_ausencia'],
+                    'motivo' => $_POST['motivo'],
+                    'archivo_evidencia' => $archivo
+             ]);
 
 			
 			Bitacora::registrar(
-    $_SESSION['usuario_id'],
-    'Registro de justificante',
-    'Nuevo justificante registrado'
-);
-
-            header(
-                'Location: index.php?page=justificantes'
+                      $_SESSION['usuario_id'],
+                      'Registro de justificante',
+                      'Nuevo justificante registrado'
             );
+
+            header('Location: index.php?page=justificantes');
             exit;
         }
-    require_once
-    __DIR__ . '/../Models/Alumno.php';
+          require_once  __DIR__ . '/../Models/Alumno.php';
+          require_once __DIR__ . '/../Models/Materia.php';
 
-require_once
-    __DIR__ . '/../Models/Materia.php';
+        if (esAlumno())
+        {
+            $alumno = Alumno::obtenerPorUsuario($_SESSION['usuario_id']);
 
-if (esAlumno())
-{
-    $alumno =
-        Alumno::obtenerPorUsuario(
-            $_SESSION['usuario_id']
-        );
-
-    $materias =
-        Materia::obtenerPorCarrera(
-            $alumno['carrera_id']
-        );
-}
-else
-{
-    $alumnos =
-        Alumno::obtenerTodos();
-
-    $materias =
-        Materia::obtenerTodas();
-}
-require_once
-    __DIR__ .
-    '/../Views/justificantes/create.php';		
+            $materias = Materia::obtenerPorCarrera($alumno['carrera_id']);
+        }
+        else
+        {
+            $alumnos = Alumno::obtenerTodos();
+            $materias = Materia::obtenerTodas();
+        }
+        require_once  __DIR__ . '/../Views/justificantes/create.php';		
        
     }
 
@@ -105,14 +79,8 @@ require_once
     {
         $id = $_GET['id'];
 
-        Justificante::cambiarEstado(
-            $id,
-            'Aprobado'
-        );
-
-        header(
-            'Location: index.php?page=justificantes'
-        );
+        Justificante::cambiarEstado($id,'Aprobado');
+        header('Location: index.php?page=justificantes');
         exit;
     }
 
@@ -120,113 +88,70 @@ require_once
     {
         $id = $_GET['id'];
 
-        Justificante::cambiarEstado(
-            $id,
-            'Rechazado'
-        );
+        Justificante::cambiarEstado($id,'Rechazado');
 
-        header(
-            'Location: index.php?page=justificantes'
-        );
+        header('Location: index.php?page=justificantes');
         exit;
     }
 	
 	public function show()
-{
-    $id = $_GET['id'];
+    {
+        $id = $_GET['id'];
 
-    $justificante =
-    Justificante::obtenerPorId($id);
+        $justificante = Justificante::obtenerPorId($id);
+        require_once __DIR__ . '/../Views/justificantes/show.php';
+    }
 
-    require_once
-    __DIR__ .
-    '/../Views/justificantes/show.php';
-}
+    public function edit()
+    {
+        $id = $_GET['id'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+	{
+        $justificante = Justificante::obtenerPorId($id);
+        $archivoActual = $justificante['archivo_evidencia'];
 
-public function edit()
-{
-    $id = $_GET['id'];
+    if(!empty($_FILES['evidencia']['name']))
+    {
+        $nombreArchivo = time() . '_' . basename($_FILES['evidencia']['name']);
 
-    if (
-        $_SERVER['REQUEST_METHOD']
-        === 'POST'
-    ) {
-        $justificante =
-    Justificante::obtenerPorId($id);
-        $archivoActual =
-    $justificante['archivo_evidencia'];
+        move_uploaded_file($_FILES['evidencia']['tmp_name'], __DIR__ . '/../../storage/uploads/justificantes/' . $nombreArchivo);
 
-if(
-    !empty($_FILES['evidencia']['name'])
-)
-{
-    $nombreArchivo =
-        time() . '_' .
-        basename(
-            $_FILES['evidencia']['name']
-        );
+        $archivoActual = $nombreArchivo;
+    }
 
-    move_uploaded_file(
-        $_FILES['evidencia']['tmp_name'],
-        __DIR__ .
-        '/../../storage/uploads/justificantes/' .
-        $nombreArchivo
-    );
-
-    $archivoActual =
-        $nombreArchivo;
-}
-
-Justificante::actualizar(
-    $id,
+    Justificante::actualizar($id,
     [
         'materia_id' =>
             $_POST['materia_id'],
-
         'fecha_ausencia' =>
             $_POST['fecha_ausencia'],
-
         'motivo' =>
             $_POST['motivo'],
+        'archivo_evidencia' => $archivoActual
+    ]);
 
-        'archivo_evidencia' =>
-            $archivoActual
-    ]
-);
-
-        header(
-            'Location:index.php?page=justificantes'
-        );
-
+        header('Location:index.php?page=justificantes');
         exit;
     }
 
-    require_once
-        __DIR__ . '/../Models/Materia.php';
+    require_once  __DIR__ . '/../Models/Materia.php';
 
-    $materias =
-        Materia::obtenerTodas();
+    $materias = Materia::obtenerTodas();
 
-    $justificante =
-        Justificante::obtenerPorId($id);
+    $justificante = Justificante::obtenerPorId($id);
 		
-		$archivoActual =
-    $justificante['archivo_evidencia'];
+		$archivoActual = $justificante['archivo_evidencia'];
 
-    require_once
-        __DIR__ .
-        '/../Views/justificantes/edit.php';
+    require_once  __DIR__ . '/../Views/justificantes/edit.php';
 }
+
 public function delete()
 {
     $id = $_GET['id'];
 
     Justificante::eliminar($id);
 
-    header(
-        'Location:index.php?page=justificantes'
-    );
-
+    header('Location:index.php?page=justificantes');
     exit;
 }
 
@@ -234,29 +159,22 @@ public function review()
 {
     $id = $_GET['id'] ?? null;
 
-    if (!$id) {
+    if (!$id) 
+	{
         header('Location:index.php?page=justificantes');
         exit;
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
-        $resultado =
-            DecisionEngine::evaluar(
-
+        $resultado = DecisionEngine::evaluar(
                 (bool)$_POST['documento_presentado'],
-
                 (bool)$_POST['documento_valido'],
-
                 (bool)$_POST['entregado_tiempo'],
-
                 (bool)$_POST['informacion_completa']
             );
 
-        Justificante::cambiarEstado(
-            $id,
-            $resultado
-        );
+        Justificante::cambiarEstado($id,$resultado);
 
         Bitacora::registrar(
             $_SESSION['usuario_id'],
@@ -264,19 +182,13 @@ public function review()
             'Resultado: ' . $resultado
         );
 
-        header(
-            'Location:index.php?page=justificantes'
-        );
-
+        header('Location:index.php?page=justificantes');
         exit;
     }
 
-    $justificante =
-        Justificante::obtenerPorId($id);
+    $justificante = Justificante::obtenerPorId($id);
 
-    require_once
-        __DIR__ .
-        '/../Views/justificantes/review.php';
+    require_once __DIR__ . '/../Views/justificantes/review.php';
 }
 
 }
