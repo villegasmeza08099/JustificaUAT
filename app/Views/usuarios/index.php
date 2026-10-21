@@ -1,15 +1,15 @@
 <?php include '../app/Views/layouts/header.php'; ?>
 <?php include '../app/Views/layouts/navbar.php'; ?>
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
 
     <div class="row">
-
+        <div class="col-md-2">
         <?php include '../app/Views/layouts/sidebar.php'; ?>
+        </div>
+        <div class="col-md-10">
 
-        <div class="col-md-10 p-4">
-
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mb-3">
 
         <h2>Usuarios</h2>
 
@@ -22,10 +22,14 @@
         </a>
 
     </div>
+	
+	<div class="card">
 
-    <table class="table table-striped mt-3">
+                <div class="card-body">
 
-        <thead>
+    <table class="table table-striped table-bordered">
+
+        <thead class="table-dark">
 
             <tr>
 

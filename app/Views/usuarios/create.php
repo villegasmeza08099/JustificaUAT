@@ -1,13 +1,14 @@
 <?php include '../app/Views/layouts/header.php'; ?>
 <?php include '../app/Views/layouts/navbar.php'; ?>
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
 
     <div class="row">
 
+        <div class="col-md-2">
         <?php include '../app/Views/layouts/sidebar.php'; ?>
-
-        <div class="col-md-10 p-4">
+        </div>
+        <div class="col-md-10">
 
             <div class="card">
 

@@ -2,11 +2,13 @@
 <?php include '../app/Views/layouts/navbar.php'; ?>
 
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
 
     <div class="row">
-
-        <?php include '../app/Views/layouts/sidebar.php'; ?>
+        
+		<div class="col-md-2">
+         <?php include '../app/Views/layouts/sidebar.php'; ?>
+        </div>
 
         <div class="col-md-10">
 
@@ -18,149 +20,98 @@
 
                 <div class="card-body">
 
-                    <form
-                        method="POST"
-                        enctype="multipart/form-data"
-                    >
+                    <form method="POST" enctype="multipart/form-data">
 
                     <?php if(esAlumno()): ?>
 
-<div class="mb-3">
+				<div class="mb-3">
 
-    <label class="form-label">
-        Alumno
-    </label>
+					<label class="form-label">
+						Alumno
+					</label>
 
-    <input
-        type="text"
-        class="form-control"
-        value="<?= $alumno['nombre']; ?>"
-        readonly>
+					<input type="text" class="form-control" value="<?= $alumno['nombre']; ?>" readonly>
 
-</div>
+				</div>
 
-<div class="mb-3">
+				<div class="mb-3">
 
-    <label class="form-label">
-        Matrícula
-    </label>
+					<label class="form-label">
+						Matrícula
+					</label>
 
-    <input
-        type="text"
-        class="form-control"
-        value="<?= $alumno['matricula']; ?>"
-        readonly>
+					<input type="text" class="form-control" value="<?= $alumno['matricula']; ?>" readonly>
 
-</div>
-<div class="mb-3">
+				</div>
+				<div class="mb-3">
 
-    <label class="form-label">
-        Carrera
-    </label>
+					<label class="form-label">
+						Carrera
+					</label>
 
-    <input
-        type="text"
-        class="form-control"
-        value="<?= $alumno['carrera']; ?>"
-        readonly>
+					<input type="text" class="form-control" value="<?= $alumno['carrera']; ?>" readonly>
 
-</div>
+				</div>
 
 <?php endif; ?>
 
 <?php if(!esAlumno()): ?>
 
-<select
-    id="alumno_id"
-    name="alumno_id"
-    class="form-select">
+				<select
+					id="alumno_id"
+					name="alumno_id"
+					class="form-select">
 
-    <?php foreach($alumnos as $a): ?>
+					<?php foreach($alumnos as $a): ?>
 
-        <option
-            value="<?= $a['id']; ?>"
-			 data-carrera="<?= $a['carrera']; ?>"
-            data-carrera-id="<?= $a['carrera_id']; ?>">
-			
+						<option value="<?= $a['id']; ?>"
+							 data-carrera="<?= $a['carrera']; ?>"
+							data-carrera-id="<?= $a['carrera_id']; ?>">
+							
 
-            <?= $a['matricula']; ?>
-            -
-            <?= $a['nombre']; ?>
+							<?= $a['matricula']; ?>
+							-
+							<?= $a['nombre']; ?>
 
-        </option>
+						</option>
 
-    <?php endforeach; ?>
+					<?php endforeach; ?>
 
-</select>
+				</select>
 
-<div class="mb-3">
+				<div class="mb-3">
 
-    <label class="form-label">
-        Carrera
-    </label>
+					<label class="form-label">
+						Carrera
+					</label>
 
-    <input
-        type="text"
-        id="carrera"
-        class="form-control"
-        readonly>
+					<input type="text" id="carrera" class="form-control" readonly>
 
-</div>
+				</div>
 
 <?php endif; ?>
                         
-<!-- <div class="mb-3">
-                            <select
-    name="alumno_id"
-    id="alumno_id"
-    class="form-select">
-
-    <?php // foreach($alumnos as $a): ?>
-
-        <option
-            value="<?//= $a['id']; ?>"
-            data-carrera="<?//= $a['carrera']; ?>"
-            data-carrera-id="<?//= $a['carrera_id']; ?>">
-
-            <?//= $a['matricula']; ?>
-            -
-            <?//= $a['nombre']; ?>
-
-        </option>
-
-    <?php //endforeach; ?>
-
-</select></div>  -->
-
-                        
-
-                        
-
                         <div class="mb-3">
 
                             <label class="form-label">
                                 Materia
                             </label>
 
-                            <select
-    id="materia_id"
-    name="materia_id"
-    class="form-select"
-    required>
+                            <select id="materia_id" name="materia_id" class="form-select" required>
 
-    <?php foreach($materias as $m): ?>
+								<?php foreach($materias as $m): ?>
 
-        <option
-            value="<?= $m['id']; ?>"
-            data-carrera-id="<?= $m['carrera_id']; ?>">
+									<option
+										value="<?= $m['id']; ?>"
+										data-carrera-id="<?= $m['carrera_id']; ?>">
 
-            <?= $m['nombre']; ?>
+										<?= $m['nombre']; ?>
 
-        </option>
+									</option>
 
-    <?php endforeach; ?>
+								<?php endforeach; ?>
 
-</select>
+							</select>
 
                         </div>
 
@@ -170,11 +121,7 @@
                                 Fecha de Ausencia
                             </label>
 
-                            <input
-                                type="date"
-                                class="form-control"
-                                name="fecha_ausencia"
-                                required>
+                            <input type="date" class="form-control" name="fecha_ausencia" required>
 
                         </div>
 
@@ -194,17 +141,13 @@
 						
 						<div class="mb-3">
 
-    <label class="form-label">
-        Evidencia
-    </label>
+							<label class="form-label">
+								Evidencia
+							</label>
 
-    <input
-        type="file"
-        class="form-control"
-        name="evidencia"
-        accept=".pdf,.jpg,.jpeg,.png">
+							<input  type="file" class="form-control" name="evidencia" accept=".pdf,.jpg,.jpeg,.png">
 
-</div>
+						</div>
 						
 						
 						
@@ -212,23 +155,25 @@
                         <div class="mb-3">
 
                             <label class="form-label">
-							<button
-        type="submit"
-        class="btn btn-success">
+							<button type="submit" class="btn btn-success">
+							<i class="bi bi-save"></i>
+							Guardar Justificante
 
-        <i class="bi bi-save"></i>
-        Guardar Justificante
+							</button>
 
-    </button>
+							<a
+								href="index.php?page=justificantes"
+								class="btn btn-secondary">
 
-    <a
-        href="index.php?page=justificantes"
-        class="btn btn-secondary">
+								<i class="bi bi-arrow-left"></i>
+								Cancelar
 
-        <i class="bi bi-arrow-left"></i>
-        Cancelar
+							</a>
 
-    </a>
-
+						</div>
+		</form>
+      </div>
+    </div>
 </div>
-</form>
+</div>
+</div>	  

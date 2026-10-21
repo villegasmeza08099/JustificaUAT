@@ -26,15 +26,13 @@ class Bitacora
                 $accion,
                 $descripcion,
                 'Sistema',
-                $_SERVER['REMOTE_ADDR']  ?? '0.0.0.0'
-            ]);
+                $_SERVER['REMOTE_ADDR']  ?? '0.0.0.0' ]);
     }
 
 public static function obtenerTodas()
 {
     $db = Database::connect();
-    $sql = "
-        SELECT *
+    $sql = "SELECT *
         FROM bitacora
         ORDER BY fecha DESC";
     return $db->query($sql) ->fetchAll(PDO::FETCH_ASSOC);

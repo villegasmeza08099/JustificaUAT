@@ -11,13 +11,11 @@ class Usuario
         $sql = " SELECT
         u.*,
         r.nombre AS rol
-    FROM usuarios u
-    INNER JOIN roles r
+        FROM usuarios u
+        INNER JOIN roles r
         ON u.rol_id = r.id
-    ORDER BY u.nombre";
-
-        return $db->query($sql)
-                  ->fetchAll(PDO::FETCH_ASSOC);
+        ORDER BY u.nombre";
+        return $db->query($sql) ->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function obtenerPorId($id)
@@ -27,15 +25,12 @@ class Usuario
         $sql = "SELECT
         u.*,
         r.nombre AS rol
-    FROM usuarios u
-    INNER JOIN roles r
+        FROM usuarios u
+        INNER JOIN roles r
         ON u.rol_id = r.id
-    WHERE u.id = ?";
-
+        WHERE u.id = ?";
         $stmt = $db->prepare($sql);
-
         $stmt->execute([$id]);
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -43,21 +38,17 @@ class Usuario
     {
         $db = Database::connect();
 
-      $sql = "
-SELECT
-    u.*,
-    r.nombre AS rol
-FROM usuarios u
-INNER JOIN roles r
-    ON u.rol_id = r.id
-WHERE u.correo = ?
-LIMIT 1
-";
+      $sql = "SELECT
+              u.*,
+              r.nombre AS rol
+              FROM usuarios u
+              INNER JOIN roles r
+              ON u.rol_id = r.id
+              WHERE u.correo = ?
+              LIMIT 1";
 
         $stmt = $db->prepare($sql);
-
         $stmt->execute([$correo]);
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -90,10 +81,7 @@ LIMIT 1
 		return $db->lastInsertId();
     }
 
-    public static function actualizar(
-        $id,
-        $data
-    )
+    public static function actualizar($id,$data)
     {
         $db = Database::connect();
 

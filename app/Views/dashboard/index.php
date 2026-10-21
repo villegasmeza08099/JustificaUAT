@@ -17,7 +17,6 @@ include '../app/Views/layouts/navbar.php';
                 Dashboard
             </h2>
 			
-
             <div class="row">
 
                 <div class="col-md-2">

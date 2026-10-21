@@ -8,36 +8,27 @@ class Materia
     {
         $db = Database::connect();
 
-        $sql = "
-        SELECT
+        $sql = "SELECT
         id,
         nombre,
         carrera_id
-    FROM materias
-    ORDER BY nombre
-        ";
+        FROM materias
+        ORDER BY nombre";
 
-        return $db->query($sql)
-                  ->fetchAll(PDO::FETCH_ASSOC);
+        return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 	
-	public static function obtenerPorCarrera(
-    $carreraId
-)
-{
-    $db = Database::connect();
+	public static function obtenerPorCarrera($carreraId)
+    {
+        $db = Database::connect();
 
-    $sql = "
-    SELECT *
-    FROM materias
-    WHERE carrera_id = ?
-    ORDER BY nombre
-    ";
+        $sql = "SELECT *
+                FROM materias
+                WHERE carrera_id = ?
+                ORDER BY nombre";
 
-    $stmt = $db->prepare($sql);
-
-    $stmt->execute([$carreraId]);
-
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+         $stmt = $db->prepare($sql);
+         $stmt->execute([$carreraId]);
+         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

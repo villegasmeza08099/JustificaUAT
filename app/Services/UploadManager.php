@@ -2,113 +2,58 @@
 
 class UploadManager
 {
-    private static array $permitidos =
-    [
-        'pdf',
-        'jpg',
-        'jpeg',
-        'png'
-    ];
+    private static array $permitidos =  ['pdf',
+                                         'jpg',
+                                         'jpeg',
+                                         'png'
+                                        ];
 
-    public static function guardar(
-        array $archivo
-    ): ?string
+    public static function guardar(array $archivo): ? string
     {
-        if (
-            empty($archivo['name'])
-        ) {
+        if (empty($archivo['name'])) 
+		{
             return null;
         }
 
-        $extension =
-        strtolower(
-            pathinfo(
-                $archivo['name'],
-                PATHINFO_EXTENSION
-            )
-        );
+        $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
 
-        if (
-            !in_array(
-                $extension,
-                self::$permitidos
-            )
-        ) {
+        if (!in_array($extension, self::$permitidos)) 
+		{
 
-            throw new Exception(
-                "Formato no permitido."
-            );
+            throw new Exception("Formato no permitido.");
         }
 
-        $nombreArchivo =
-        uniqid('JUS_')
-        . '.'
-        . $extension;
+        $nombreArchivo = uniqid('JUS_') . '.' . $extension;
 
-        $rutaDestino =
-        __DIR__
-        . '/../../storage/uploads/justificantes/'
-        . $nombreArchivo;
+        $rutaDestino = __DIR__ . '/../../storage/uploads/justificantes/' . $nombreArchivo;
 
-        move_uploaded_file(
-            $archivo['tmp_name'],
-            $rutaDestino
-        );
+        move_uploaded_file($archivo['tmp_name'],$rutaDestino);
 
         return $nombreArchivo;
     }
 	
-	public static function upload(
-$file
-)
-{
-if(
-empty($file['name'])
-){
-return null;
-}
+	public static function upload($file)
+    {
+        if(empty($file['name']))
+		{
+           return null;
+        }
  
-$extension =
-strtolower(
-pathinfo(
-$file['name'],
-PATHINFO_EXTENSION
-)
-);
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
  
-$permitidos = [
-'pdf',
-'png',
-'jpg',
-'jpeg'
-];
+        $permitidos = ['pdf','png','jpg','jpeg'];
  
-if(
-!in_array(
-$extension,
-$permitidos
-)
-){
-throw new Exception(
-"Archivo no permitido"
-);
-}
+        if(!in_array($extension,$permitidos))
+		{
+            throw new Exception("Archivo no permitido");
+        }
  
-$nombre =
-uniqid('JUS_')
-.'.'
-.$extension;
+        $nombre = uniqid('JUS_').'.' .$extension;
  
-$ruta =
-__DIR__
-.'/../../storage/uploads/justificantes/'
-.$nombre;
+        $ruta = __DIR__ .'/../../storage/uploads/justificantes/'.$nombre;
  
-move_uploaded_file(
-$file['tmp_name'],
-$ruta
-);
+        move_uploaded_file($file['tmp_name'],$ruta);
  
-return $nombre;
-}
+        return $nombre;
+    }
 }

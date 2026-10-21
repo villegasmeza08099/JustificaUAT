@@ -2,22 +2,13 @@
 
 class ReportService
 {
-    public static function exportarCSV(
-        $datos,
-        $archivo
-    )
+    public static function exportarCSV($datos,$archivo)
     {
-        $fp =
-        fopen($archivo,'w');
+        $fp = fopen($archivo,'w');
 
-        foreach(
-            $datos
-            as $fila
-        ){
-            fputcsv(
-                $fp,
-                $fila
-            );
+        foreach($datos as $fila)
+		{
+            fputcsv($fp,$fila);
         }
 
         fclose($fp);

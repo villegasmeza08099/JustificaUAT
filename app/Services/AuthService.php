@@ -9,19 +9,16 @@ class AuthService
 
     public static function user()
     {
-        return [
-            'id' => $_SESSION['usuario_id'] ?? null,
+        return ['id' => $_SESSION['usuario_id'] ?? null,
             'nombre' => $_SESSION['nombre'] ?? null,
             'rol' => $_SESSION['rol'] ?? null
-        ];
+             ];
     }
 
     public static function requireRole($rol)
     {
-        if (
-            !isset($_SESSION['rol']) ||
-            $_SESSION['rol'] !== $rol
-        ) {
+        if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== $rol) 
+		{
             die('Acceso denegado');
         }
     }

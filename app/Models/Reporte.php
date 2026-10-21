@@ -8,13 +8,11 @@ class Reporte
 {
     $db = Database::connect();
 
-    $sql = "
-    SELECT
+    $sql = "SELECT
         estado,
         COUNT(*) total
-    FROM justificantes
-   GROUP BY estado
-    ";
+        FROM justificantes
+        GROUP BY estado";
 
     return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -24,14 +22,11 @@ class Reporte
     {
         $db = Database::connect();
 
-        $sql = "
-        SELECT
+        $sql = "SELECT
             carrera,
             COUNT(*) total
-        FROM justificantes
-        GROUP BY carrera
-        ";
-
+            FROM justificantes
+            GROUP BY carrera";
         return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -39,16 +34,13 @@ class Reporte
     {
         $db = Database::connect();
 
-        $sql = "
-        SELECT
+        $sql = "SELECT
             MONTH(fecha_registro) mes,
             COUNT(*) total
-        FROM justificantes
-        GROUP BY MONTH(fecha_registro)
-        ";
+            FROM justificantes
+            GROUP BY MONTH(fecha_registro)";
 
-        return $db->query($sql)
-                  ->fetchAll(PDO::FETCH_ASSOC);
+        return $db->query($sql) ->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>
