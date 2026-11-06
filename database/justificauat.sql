@@ -36,14 +36,16 @@ CREATE TABLE `alumnos` (
   KEY `fk_alumno_usuario` (`usuario_id`),
   CONSTRAINT `fk_alumno_carrera` FOREIGN KEY (`carrera_id`) REFERENCES `carreras` (`id`),
   CONSTRAINT `fk_alumno_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `alumnos` */
 
 insert  into `alumnos`(`id`,`matricula`,`nombre`,`carrera_id`,`correo`,`telefono`,`activo`,`created_at`,`usuario_id`) values 
 (2,'a21210015','José Manuel Alarcón Dorantes',1,NULL,NULL,1,'2026-10-12 15:55:45',NULL),
 (3,'a21210016','Alfredo López Piña',2,NULL,NULL,1,'2026-10-12 17:11:31',NULL),
-(4,'a21210017','Ángel Gabriel García',1,'angel@uat.edu.mx',NULL,1,'2026-10-15 11:54:41',4);
+(4,'a21210017','Ángel Gabriel García',1,'angel@uat.edu.mx',NULL,1,'2026-10-15 11:54:41',4),
+(5,'a22210020','Rodolfo Alberto Martínez Ferrer',3,NULL,NULL,1,'2026-10-16 15:32:12',NULL),
+(6,'a22210057','Fortunato Domínguez Hernández',3,NULL,NULL,1,'2026-10-16 15:43:25',7);
 
 /*Table structure for table `bitacora` */
 
@@ -60,7 +62,7 @@ CREATE TABLE `bitacora` (
   PRIMARY KEY (`id`),
   KEY `fk_bitacora_usuario` (`usuario_id`),
   CONSTRAINT `fk_bitacora_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bitacora` */
 
@@ -119,7 +121,27 @@ insert  into `bitacora`(`id`,`usuario_id`,`accion`,`descripcion`,`ip`,`modulo`,`
 (52,2,'Evaluación DSS','Resultado: Aprobado','::1','Sistema','2026-10-15 12:23:30'),
 (53,4,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-15 12:53:44'),
 (54,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-15 14:33:09'),
-(55,3,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-15 16:32:49');
+(55,3,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-15 16:32:49'),
+(56,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-16 12:51:36'),
+(57,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-16 13:59:09'),
+(58,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-16 14:00:17'),
+(59,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-16 14:15:48'),
+(60,2,'Crear Usuario','alberto@uat.edu.mx','::1','Sistema','2026-10-16 15:21:29'),
+(61,2,'Alta de usuario','alberto@uat.edu.mx','::1','Sistema','2026-10-16 15:21:29'),
+(62,2,'Crear Usuario','rodolfo@uat.edu.mx','::1','Sistema','2026-10-16 15:32:12'),
+(63,2,'Alta de usuario','rodolfo@uat.edu.mx','::1','Sistema','2026-10-16 15:32:12'),
+(64,2,'Crear Usuario','fortunato@uat.edu.mx','::1','Sistema','2026-10-16 15:43:25'),
+(65,2,'Alta de usuario','fortunato@uat.edu.mx','::1','Sistema','2026-10-16 15:43:25'),
+(66,7,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-16 15:45:09'),
+(67,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-21 16:07:53'),
+(68,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 12:29:36'),
+(69,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 15:41:42'),
+(70,4,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 15:50:32'),
+(71,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:01:37'),
+(72,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:18:52'),
+(73,4,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:30:28'),
+(74,3,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:32:01'),
+(75,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-05 18:10:07');
 
 /*Table structure for table `carreras` */
 
@@ -130,16 +152,18 @@ CREATE TABLE `carreras` (
   `nombre` varchar(150) NOT NULL,
   `clave` varchar(20) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `activo` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `clave` (`clave`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `carreras` */
 
-insert  into `carreras`(`id`,`nombre`,`clave`,`created_at`) values 
-(1,'Arquitectura','001','2026-10-12 15:54:11'),
-(2,'Diseño Gráfico','002','2026-10-12 15:54:58'),
-(3,'Arquitectura de Interiores','003','2026-10-12 15:55:02');
+insert  into `carreras`(`id`,`nombre`,`clave`,`created_at`,`activo`) values 
+(1,'Arquitectura','001','2026-10-12 15:54:11',1),
+(2,'Diseño Gráfico','002','2026-10-12 15:54:58',1),
+(3,'Arquitectura de Interiores','003','2026-10-12 15:55:02',1),
+(4,'Diseño Gráfico y Animación Digital','004','2026-11-06 11:37:55',1);
 
 /*Table structure for table `configuracion` */
 
@@ -273,17 +297,20 @@ CREATE TABLE `materias` (
   `clave` varchar(30) DEFAULT NULL,
   `carrera_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `fk_materia_carrera` (`carrera_id`),
   CONSTRAINT `fk_materia_carrera` FOREIGN KEY (`carrera_id`) REFERENCES `carreras` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `materias` */
 
-insert  into `materias`(`id`,`nombre`,`clave`,`carrera_id`,`created_at`) values 
-(1,'Matemáticas Aplicadas a la Arquitectura','mate01',1,'2026-10-12 15:58:46'),
-(2,'Dibujo Industrial','dibu02',1,'2026-10-12 15:59:10'),
-(3,'Matemáticas Descriptivas para Proyectos de Diseño Gráfico','Mate02',2,'2026-10-12 17:10:52');
+insert  into `materias`(`id`,`nombre`,`clave`,`carrera_id`,`created_at`,`activo`) values 
+(1,'Matemáticas Aplicadas a la Arquitectura','mate01',1,'2026-10-12 15:58:46',1),
+(2,'Dibujo Industrial','dibu02',1,'2026-10-12 15:59:10',1),
+(3,'Matemáticas Descriptivas para Proyectos de Diseño Gráfico','Mate02',2,'2026-10-12 17:10:52',1),
+(4,'Taller de Serigrafia','tall01',2,'2026-11-06 12:43:15',1),
+(5,'Geometría Bidimensional','GeoBi',1,'2026-11-06 15:46:17',0);
 
 /*Table structure for table `reportes` */
 
@@ -342,14 +369,17 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `correo` (`correo`),
   KEY `fk_usuario_rol` (`rol_id`),
   CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `usuarios` */
 
 insert  into `usuarios`(`id`,`nombre`,`apellido_paterno`,`apellido_materno`,`correo`,`password`,`rol_id`,`activo`,`ultimo_acceso`,`created_at`,`updated_at`) values 
-(2,'Administrador','General',NULL,'admin@justificauat.mx','$2y$10$jMLaTT7vM1KnOOmTKD5QrO0joYLXNE/IQfUfvXdJgaDxb6qUrHZFm',1,1,'2026-10-15 14:33:09','2026-10-08 11:04:14','2026-10-15 14:33:09'),
-(3,'Gabriela Berenice Villegas Meza',NULL,NULL,'villegas.meza.08099@itsmante.edu.mx','$2y$10$B77tESPD2b3tY7ZKF5bglOGloi8AGfKFLVuu8PV5TRapk1NXZfmaG',2,1,'2026-10-15 16:32:49','2026-10-14 10:59:01','2026-10-15 16:32:49'),
-(4,'Ángel Gabriel',NULL,NULL,'angel@uat.edu.mx','$2y$10$Y7/ataHaChpu6hkLmFVinOf8B7n6YjuxDCJnFqlri7FamgAoLZpcW',3,1,'2026-10-15 12:53:44','2026-10-15 10:20:50','2026-10-15 12:53:44');
+(2,'Administrador','General',NULL,'admin@justificauat.mx','$2y$10$jMLaTT7vM1KnOOmTKD5QrO0joYLXNE/IQfUfvXdJgaDxb6qUrHZFm',1,1,'2026-11-05 18:10:07','2026-10-08 11:04:14','2026-11-05 18:10:07'),
+(3,'Gabriela Berenice Villegas Meza',NULL,NULL,'villegas.meza.08099@itsmante.edu.mx','$2y$10$B77tESPD2b3tY7ZKF5bglOGloi8AGfKFLVuu8PV5TRapk1NXZfmaG',2,1,'2026-10-29 16:32:01','2026-10-14 10:59:01','2026-10-29 16:32:01'),
+(4,'Ángel Gabriel',NULL,NULL,'angel@uat.edu.mx','$2y$10$Y7/ataHaChpu6hkLmFVinOf8B7n6YjuxDCJnFqlri7FamgAoLZpcW',3,1,'2026-10-29 16:30:28','2026-10-15 10:20:50','2026-10-29 16:30:28'),
+(5,'Alberto Trejo López',NULL,NULL,'alberto@uat.edu.mx','$2y$10$DwpceWYgd0k9m79Z/vA7VOLcOMP8ed92o0MGBGkjPuM091SQa2pQS',3,1,NULL,'2026-10-16 15:21:29','2026-10-16 15:21:29'),
+(6,'Rodolfo Alberto Martínez Ferrer',NULL,NULL,'rodolfo@uat.edu.mx','$2y$10$vPq/BVImlFy8JhfbG.9x9ehGieq0fvl62/i6v4T/VIRMyQvHdA856',3,1,NULL,'2026-10-16 15:32:12','2026-10-16 15:32:12'),
+(7,'Fortunato Domínguez Hernández',NULL,NULL,'fortunato@uat.edu.mx','$2y$10$qHk.q/ncwoGHcncAoWTlKeCiMC/SheT7DWqC42Hjfn85ilH7xyRAm',3,1,'2026-10-16 15:45:09','2026-10-16 15:43:25','2026-10-16 15:45:09');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
