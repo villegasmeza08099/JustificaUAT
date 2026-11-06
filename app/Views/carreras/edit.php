@@ -3,49 +3,76 @@ include '../app/Views/layouts/header.php';
 include '../app/Views/layouts/navbar.php';
 ?>
 
-<div class="container mt-4">
+<div class="container-fluid mt-4">
 
-<h2>Editar Carrera</h2>
+    <div class="row">
 
-<form method="POST">
+        <div class="col-md-2">
+            <?php include '../app/Views/layouts/sidebar.php'; ?>
+        </div>
 
-<div class="mb-3">
+        <div class="col-md-10">
 
-<label>Clave</label>
+            <h2 class="mb-4">
+                Editar Carrera
+            </h2>
 
-<input
- type="text"
- name="clave"
- class="form-control"
- value="<?= $carrera['clave'] ?>"
- required>
+            <div class="card">
 
-</div>
+                <div class="card-body">
 
-<div class="mb-3">
+                    <form method="POST">
 
-<label>Nombre</label>
+                        <div class="mb-3">
 
-<input
- type="text"
- name="nombre"
- class="form-control"
- value="<?= $carrera['nombre'] ?>"
- required>
+                            <label class="form-label">
+                                Clave
+                            </label>
 
-</div>
+                            <input
+								type="text"
+								class="form-control"
+								value="<?= htmlspecialchars($carrera['clave']) ?>"
+								readonly>
 
-<button class="btn btn-primary">
-Actualizar
-</button>
+                        </div>
 
-<a
- href="index.php?page=carreras"
- class="btn btn-secondary">
-Cancelar
-</a>
+                        <div class="mb-3">
 
-</form>
+                            <label class="form-label">
+                                Nombre
+                            </label>
+
+                            <input
+                                type="text"
+                                name="nombre"
+                                class="form-control"
+                                value="<?= htmlspecialchars($carrera['nombre']) ?>"
+                                required>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+                            Actualizar
+                        </button>
+
+                        <a
+                            href="index.php?page=carreras"
+                            class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

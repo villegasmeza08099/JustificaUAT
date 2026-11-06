@@ -27,7 +27,7 @@ include '../app/Views/layouts/navbar.php';
 
                     <table class="table table-striped table-bordered">
 
-                        <thead>
+                        <thead class="table-dark">
 
                         <tr>
                             <th>ID</th>
@@ -52,12 +52,27 @@ include '../app/Views/layouts/navbar.php';
 								 href="index.php?page=carreras_edit&id=<?= $c['id'] ?>">
 								 Editar
 								</a>
+								<?php if($c['activo']): ?>
+
 								<a
-								 class="btn btn-danger btn-sm"
-								 href="index.php?page=carreras_delete&id=<?= $c['id'] ?>"
-								 onclick="return confirm('¿Desactivar carrera?')">
-								 Desactivar
+									href="index.php?page=carreras_desactivar&id=<?= $c['id'] ?>"
+									class="btn btn-danger btn-sm"
+									onclick="return confirm('¿Desea desactivar esta carrera?')">
+									Desactivar
 								</a>
+
+								<?php else: ?>
+
+								 <a
+									href="index.php?page=carreras_activar&id=<?= $c['id'] ?>"
+									class="btn btn-success btn-sm"
+									onclick="return confirm('¿Desea activar esta carrera?')">
+
+									Activar
+
+								</a>
+
+								<?php endif; ?>
 
 								</td>
                             </tr>

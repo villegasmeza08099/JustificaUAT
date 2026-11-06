@@ -154,6 +154,16 @@ case 'carreras_delete':
         '../app/Controllers/CarreraController.php';
 
     (new CarreraController())->eliminar();
+    break;
+
+case 'carreras_desactivar':
+    require_once '../app/Controllers/CarreraController.php';
+    (new CarreraController())->desactivar();
+    break;
+
+case 'carreras_activar':
+    require_once '../app/Controllers/CarreraController.php';
+    (new CarreraController())->activar();
     break;	
 
 /* ==========================
@@ -175,6 +185,15 @@ case 'materias_edit':
     (new MateriaController())->editar();
     break;
 
+case 'materias_desactivar':
+    require_once '../app/Controllers/MateriaController.php';
+    (new MateriaController())->desactivar();
+    break;
+
+case 'materias_activar':
+    require_once '../app/Controllers/MateriaController.php';
+    (new MateriaController())->activar();
+    break;
 
 
 

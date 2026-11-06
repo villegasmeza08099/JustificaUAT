@@ -65,14 +65,24 @@
                 <td>
                     <?= $u['rol']; ?>
                 </td>
+				
+				<td>
+									<?php if($u['activo'] == 1): ?>
 
-                <td>
+										<span class="badge bg-success">
+											Activa
+										</span>
 
-                    <?= $u['activo'] ? 'Sí' : 'No'; ?>
+									<?php else: ?>
 
-                </td>
+										<span class="badge bg-secondary">
+											Inactiva
+										</span>
 
-                <td>
+									<?php endif; ?>
+								</td>
+
+                                <td>
 
                    <a href="index.php?page=usuarios_show&id=<?= $u['id']; ?>"   class="btn btn-info btn-sm">
 

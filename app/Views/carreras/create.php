@@ -3,53 +3,67 @@ include '../app/Views/layouts/header.php';
 include '../app/Views/layouts/navbar.php';
 ?>
 
-<div class="container mt-4">
+<div class="container-fluid mt-4">
+    <div class="row">
 
-<h2>Nueva Carrera</h2>
+        <div class="col-md-2">
+            <?php include '../app/Views/layouts/sidebar.php'; ?>
+        </div>
 
-<form method="POST">
+        <div class="col-md-10">
 
-<div class="mb-3">
+            <h2 class="mb-4">Nueva Carrera</h2>
 
-<label>Clave</label>
+            <div class="card">
+                <div class="card-body">
 
-<input
- type="text"
- name="clave"
- class="form-control"
- required>
+                    <form method="POST">
 
-</div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Clave
+                            </label>
 
-<div class="mb-3">
+                            <input
+								type="text"
+								name="clave"
+								class="form-control"
+								value="<?= $claveSiguiente ?>"
+								readonly>
+                        </div>
 
-<label>Nombre</label>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Nombre
+                            </label>
 
-<input
- type="text"
- name="nombre"
- class="form-control"
- required>
+                            <input
+                                type="text"
+                                name="nombre"
+                                class="form-control"
+                                required>
+                        </div>
 
-</div>
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+                            Guardar
+                        </button>
 
-<button
- class="btn btn-primary">
+                        <a
+                            href="index.php?page=carreras"
+                            class="btn btn-secondary">
+                            Cancelar
+                        </a>
 
-Guardar
+                    </form>
 
-</button>
+                </div>
+            </div>
 
-<a
- href="index.php?page=carreras"
- class="btn btn-secondary">
+        </div>
 
-Cancelar
-
-</a>
-
-</form>
-
+    </div>
 </div>
 
 <?php

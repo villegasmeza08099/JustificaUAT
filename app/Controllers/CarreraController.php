@@ -16,7 +16,8 @@ class CarreraController
 {
     if($_SERVER['REQUEST_METHOD']=='POST')
     {
-        Carrera::crear([
+		
+		Carrera::crear([
             'clave' => $_POST['clave'],
             'nombre' => $_POST['nombre']
         ]);
@@ -24,9 +25,11 @@ class CarreraController
         header(
             'Location:index.php?page=carreras'
         );
-
-        exit;
+	    exit;
     }
+	
+	$claveSiguiente = Carrera::siguienteClave();
+        require_once __DIR__ .  '/../Views/carreras/create.php';
 
     require_once __DIR__ .
         '/../Views/carreras/create.php';
@@ -41,7 +44,7 @@ public function editar()
         Carrera::actualizar(
             $id,
             [
-                'clave' => $_POST['clave'],
+               
                 'nombre' => $_POST['nombre']
             ]
         );
@@ -72,4 +75,25 @@ public function eliminar()
 
     exit;
 }
+
+public function desactivar()
+{
+    $id = $_GET['id'];
+
+    Carrera::desactivar($id);
+
+    header('Location: index.php?page=carreras');
+    exit;
+}
+
+public function activar()
+{
+    $id = $_GET['id'];
+
+    Carrera::activar($id);
+
+    header('Location: index.php?page=carreras');
+    exit;
+}
+
 }

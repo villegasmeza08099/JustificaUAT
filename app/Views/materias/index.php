@@ -29,11 +29,14 @@ include '../app/Views/layouts/navbar.php';
 
                     <table class="table table-striped table-bordered">
 
-                        <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>ID</th>
+							<th>Clave</th>
                             <th>Nombre</th>
                             <th>Carrera</th>
+							<th>Estado</th>
+							<th>Acciones</th>
                         </tr>
                         </thead>
 
@@ -42,9 +45,60 @@ include '../app/Views/layouts/navbar.php';
                         <?php foreach($materias as $m): ?>
 
                             <tr>
+							    
                                 <td><?= $m['id'] ?></td>
-                                <td><?= $m['nombre'] ?></td>
-                                <td><?= $m['carrera_id'] ?></td>
+                                <td><?= htmlspecialchars($m['clave']) ?></td>
+								<td><?= $m['nombre'] ?></td>
+                                <td><?= $m['carrera'] ?></td>
+								<td>
+									<?php if($m['activo'] == 1): ?>
+
+										<span class="badge bg-success">
+											Activa
+										</span>
+
+									<?php else: ?>
+
+										<span class="badge bg-secondary">
+											Inactiva
+										</span>
+
+									<?php endif; ?>
+								</td>
+								<td>
+
+    <a
+        href="index.php?page=materias_edit&id=<?= $m['id'] ?>"
+        class="btn btn-warning btn-sm">
+
+        Editar
+
+    </a>
+
+    <?php if($m['activo'] == 1): ?>
+
+        <a
+            href="index.php?page=materias_desactivar&id=<?= $m['id'] ?>"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('¿Desea desactivar esta materia?')">
+
+            Desactivar
+
+        </a>
+
+    <?php else: ?>
+
+        <a
+            href="index.php?page=materias_activar&id=<?= $m['id'] ?>"
+            class="btn btn-success btn-sm">
+
+            Activar
+
+        </a>
+
+    <?php endif; ?>
+
+</td>
                             </tr>
 
                         <?php endforeach; ?>
