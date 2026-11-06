@@ -130,6 +130,54 @@ switch ($page) {
 
     break;
 
+/* ==========================
+   CARRERAS
+========================== */
+
+case 'carreras':
+    require_once '../app/Controllers/CarreraController.php';
+    (new CarreraController())->index();
+    break;
+
+case 'carreras_create':
+    require_once '../app/Controllers/CarreraController.php';
+    (new CarreraController())->crear();
+    break;
+
+case 'carreras_edit':
+    require_once '../app/Controllers/CarreraController.php';
+    (new CarreraController())->editar();
+    break;
+	
+case 'carreras_delete':
+    require_once
+        '../app/Controllers/CarreraController.php';
+
+    (new CarreraController())->eliminar();
+    break;	
+
+/* ==========================
+   MATERIAS
+========================== */
+
+case 'materias':
+    require_once '../app/Controllers/MateriaController.php';
+    (new MateriaController())->index();
+    break;
+
+case 'materias_create':
+    require_once '../app/Controllers/MateriaController.php';
+    (new MateriaController())->crear();
+    break;
+
+case 'materias_edit':
+    require_once '../app/Controllers/MateriaController.php';
+    (new MateriaController())->editar();
+    break;
+
+
+
+
 
     /* ==========================
        DECISIONES

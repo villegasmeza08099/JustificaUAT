@@ -114,6 +114,22 @@
                 Usuarios
 
             </a>
+			<a
+                href="index.php?page=carreras"
+                class="list-group-item list-group-item-action">
+
+                <i class="bi bi-people"></i>
+                Carreras
+
+            </a>
+			<a
+                href="index.php?page=materias"
+                class="list-group-item list-group-item-action">
+
+                <i class="bi bi-people"></i>
+                Materias
+
+            </a>
 
         <?php endif; ?>
 
