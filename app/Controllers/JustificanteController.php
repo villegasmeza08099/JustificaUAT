@@ -4,6 +4,7 @@ require_once __DIR__ . '/../Models/DecisionEngine.php';
 require_once __DIR__ . '/../Models/Bitacora.php';
 require_once __DIR__ . '/../Models/Alumno.php';
 require_once __DIR__ . '/../Models/Materia.php';
+require_once __DIR__ . '/../Services/PdfService.php';
 
 
 class JustificanteController
@@ -39,13 +40,29 @@ class JustificanteController
                 $archivo = $nombreArchivo;
             }
 
-            Justificante::crear([
-                    'alumno_id' => $_POST['alumno_id'],
-                    'materia_id' => $_POST['materia_id'],
-                    'fecha_ausencia' => $_POST['fecha_ausencia'],
-                    'motivo' => $_POST['motivo'],
-                    'archivo_evidencia' => $archivo
-             ]);
+            if(esAlumno())
+			{
+				$alumno =
+					Alumno::obtenerPorUsuario(
+						$_SESSION['usuario_id']
+					);
+
+				$alumnoId =
+					$alumno['id'];
+			}
+			else
+			{
+				$alumnoId =
+					$_POST['alumno_id'];
+			}
+
+			Justificante::crear([
+				'alumno_id' => $alumnoId,
+				'materia_id' => $_POST['materia_id'],
+				'fecha_ausencia' => $_POST['fecha_ausencia'],
+				'motivo' => $_POST['motivo'],
+				'archivo_evidencia' => $archivo
+			]);
 
 			
 			Bitacora::registrar(
@@ -69,7 +86,7 @@ class JustificanteController
         else
         {
             $alumnos = Alumno::obtenerTodos();
-            $materias = Materia::obtenerTodas();
+			$materias = Materia::obtenerActivas();
         }
         require_once  __DIR__ . '/../Views/justificantes/create.php';		
        
@@ -168,19 +185,40 @@ public function review()
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         $resultado = DecisionEngine::evaluar(
-                (bool)$_POST['documento_presentado'],
-                (bool)$_POST['documento_valido'],
-                (bool)$_POST['entregado_tiempo'],
-                (bool)$_POST['informacion_completa']
-            );
+    (bool)$_POST['documento_presentado'],
+    (bool)$_POST['documento_valido'],
+    (bool)$_POST['entregado_tiempo'],
+    (bool)$_POST['informacion_completa']
+);
 
-        Justificante::cambiarEstado($id,$resultado);
+Justificante::cambiarEstado(
+    $id,
+    $resultado
+);
 
-        Bitacora::registrar(
-            $_SESSION['usuario_id'],
-            'Evaluación DSS',
-            'Resultado: ' . $resultado
+if($resultado === 'Aprobado')
+{
+    $justificante =
+        Justificante::obtenerPorId(
+            $id
         );
+
+    $rutaPdf =
+        PdfService::generar(
+            $justificante
+        );
+
+    Justificante::guardarPdf(
+        $id,
+        $rutaPdf
+    );
+}
+
+Bitacora::registrar(
+    $_SESSION['usuario_id'],
+    'Evaluación DSS',
+    'Resultado: ' . $resultado
+);
 
         header('Location:index.php?page=justificantes');
         exit;
@@ -189,6 +227,41 @@ public function review()
     $justificante = Justificante::obtenerPorId($id);
 
     require_once __DIR__ . '/../Views/justificantes/review.php';
+}
+
+public function pdf()
+{
+    $id = $_GET['id'];
+
+    $justificante =
+        Justificante::obtenerPorId(
+            $id
+        );
+
+    if(
+        empty(
+            $justificante['pdf_path']
+        )
+    )
+    {
+        die(
+            'PDF no disponible.'
+        );
+    }
+
+    header(
+        'Content-Type: application/pdf'
+    );
+
+    header(
+        'Content-Disposition: inline; filename="justificante.pdf"'
+    );
+
+    readfile(
+        $justificante['pdf_path']
+    );
+
+    exit;
 }
 
 }

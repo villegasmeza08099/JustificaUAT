@@ -111,6 +111,15 @@ switch ($page) {
         (new JustificanteController())->edit();
 
         break;
+		
+	case 'justificantes_pdf':
+
+    require_once '../app/Controllers/JustificanteController.php';
+
+    (new JustificanteController())
+        ->pdf();
+
+    break;	
 
 
     case 'justificantes_delete':

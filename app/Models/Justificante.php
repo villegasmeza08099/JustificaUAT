@@ -186,6 +186,63 @@ public static function obtenerPorAlumno($alumnoId)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public static function contarTodosPorAlumno($alumnoId)
+{
+    $db = Database::connect();
+
+    $stmt = $db->prepare("
+        SELECT COUNT(*)
+        FROM justificantes
+        WHERE alumno_id = ?
+    ");
+
+    $stmt->execute([$alumnoId]);
+
+    return $stmt->fetchColumn();
+}
+
+public static function contarPorEstadoAlumno(
+    $estado,
+    $alumnoId
+)
+{
+    $db = Database::connect();
+
+    $stmt = $db->prepare("
+        SELECT COUNT(*)
+        FROM justificantes
+        WHERE estado = ?
+        AND alumno_id = ?
+    ");
+
+    $stmt->execute([
+        $estado,
+        $alumnoId
+    ]);
+
+    return $stmt->fetchColumn();
+}
+
+public static function guardarPdf(
+    $id,
+    $ruta
+)
+{
+    $db = Database::connect();
+
+    $stmt = $db->prepare("
+        UPDATE justificantes
+        SET pdf_path = ?
+        WHERE id = ?
+    ");
+
+    return $stmt->execute([
+        $ruta,
+        $id
+    ]);
+}
+
+
 }
 
 ?>

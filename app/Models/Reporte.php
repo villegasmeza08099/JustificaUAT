@@ -42,5 +42,25 @@ class Reporte
 
         return $db->query($sql) ->fetchAll(PDO::FETCH_ASSOC);
     }
+	
+	public static function justificantesPorEstadoAlumno(
+    $alumnoId
+)
+{
+    $db = Database::connect();
+
+    $stmt = $db->prepare("
+        SELECT
+            estado,
+            COUNT(*) total
+        FROM justificantes
+        WHERE alumno_id = ?
+        GROUP BY estado
+    ");
+
+    $stmt->execute([$alumnoId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 ?>

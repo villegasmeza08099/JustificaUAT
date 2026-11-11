@@ -14,6 +14,7 @@ class Materia
             m.id,
             m.clave,
             m.nombre,
+            m.carrera_id,
             m.activo,
             c.nombre AS carrera
         FROM materias m
@@ -25,20 +26,47 @@ class Materia
     return $db->query($sql)
               ->fetchAll(PDO::FETCH_ASSOC);
 }
+
+public static function obtenerActivas()
+{
+    $db = Database::connect();
+
+    $sql = "
+        SELECT
+            m.id,
+            m.clave,
+            m.nombre,
+            m.carrera_id,
+            m.activo,
+            c.nombre AS carrera
+        FROM materias m
+        INNER JOIN carreras c
+            ON c.id = m.carrera_id
+        WHERE m.activo = 1
+        ORDER BY m.nombre
+    ";
+
+    return $db->query($sql)
+              ->fetchAll(PDO::FETCH_ASSOC);
+}
 	
 	public static function obtenerPorCarrera($carreraId)
-    {
-        $db = Database::connect();
+{
+    $db = Database::connect();
 
-        $sql = "SELECT *
-                FROM materias
-                WHERE carrera_id = ?
-                ORDER BY nombre";
+    $sql = "
+        SELECT *
+        FROM materias
+        WHERE carrera_id = ?
+        AND activo = 1
+        ORDER BY nombre
+    ";
 
-         $stmt = $db->prepare($sql);
-         $stmt->execute([$carreraId]);
-         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$carreraId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 	
 	public static function crear($datos)
 {

@@ -86,21 +86,69 @@ switch($j['estado'])
 </td>
 
                                     <td>
-									
-                                       <?php if($_SESSION['rol'] == 'Alumno' || $_SESSION['rol'] == 'GestionEscolar'|| $_SESSION['rol'] == 'Administrador'):?>  
-                                        <a href="index.php?page=justificantes_show&id=<?= $j['id']; ?>" class="btn btn-info btn-sm">Ver</a>
-										<?php endif; ?>
-										
-										<?php if($j['estado'] === 'Pendiente' || $j['estado'] === 'Correccion'): ?>
-										
-                                        <a href="index.php?page=justificantes_edit&id=<?= $j['id']; ?>"  class="btn btn-warning btn-sm">Editar</a>
-										<?php endif; ?>
-                                           
-										   <?php if($_SESSION['rol'] == 'GestionEscolar'|| $_SESSION['rol'] == 'Administrador' && $j['estado'] != 'Aprobado'): ?>
-                                           <a href="index.php?page=justificantes_review&id=<?= $j['id']; ?>" class="btn btn-primary btn-sm"> Evaluar </a>
-                                          <?php endif; ?>
-                                           <a href="index.php?page=justificantes_delete&id=<?= $j['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar este justificante?');">Eliminar</a>
-                                    </td>
+
+    <?php if(
+        $_SESSION['rol'] == 'Alumno' ||
+        $_SESSION['rol'] == 'GestionEscolar' ||
+        $_SESSION['rol'] == 'Administrador'
+    ): ?>
+
+        <a
+            href="index.php?page=justificantes_show&id=<?= $j['id']; ?>"
+            class="btn btn-info btn-sm">
+            Ver
+        </a>
+
+    <?php endif; ?>
+
+    <?php if(
+        $j['estado'] === 'Pendiente' ||
+        $j['estado'] === 'Correccion'
+    ): ?>
+
+        <a
+            href="index.php?page=justificantes_edit&id=<?= $j['id']; ?>"
+            class="btn btn-warning btn-sm">
+            Editar
+        </a>
+
+    <?php endif; ?>
+
+    <?php if($j['estado'] === 'Aprobado'): ?>
+
+        <a
+            href="index.php?page=justificantes_pdf&id=<?= $j['id']; ?>"
+            class="btn btn-success btn-sm">
+            PDF
+        </a>
+
+    <?php else: ?>
+
+        <?php if(
+            $_SESSION['rol'] == 'GestionEscolar' ||
+            $_SESSION['rol'] == 'Administrador'
+        ): ?>
+
+            <a
+                href="index.php?page=justificantes_review&id=<?= $j['id']; ?>"
+                class="btn btn-primary btn-sm">
+                Evaluar
+            </a>
+
+        <?php endif; ?>
+
+    <?php endif; ?>
+
+    <a
+        href="index.php?page=justificantes_delete&id=<?= $j['id']; ?>"
+        class="btn btn-danger btn-sm"
+        onclick="return confirm('¿Desea eliminar este justificante?');">
+
+        Eliminar
+
+    </a>
+
+</td>
 
                                 </tr>
 
