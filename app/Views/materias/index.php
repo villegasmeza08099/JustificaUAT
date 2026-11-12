@@ -17,7 +17,7 @@ include '../app/Views/layouts/navbar.php';
                 <h2>Catálogo de Materias</h2>
 
                 <a href="index.php?page=materias_create"
-                   class="btn btn-primary">
+                   class="btn btn-success">
                     Nueva Materia
                 </a>
 

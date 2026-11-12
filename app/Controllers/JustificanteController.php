@@ -85,7 +85,7 @@ class JustificanteController
         }
         else
         {
-            $alumnos = Alumno::obtenerTodos();
+            $alumnos = Alumno::obtenerActivos();
 			$materias = Materia::obtenerActivas();
         }
         require_once  __DIR__ . '/../Views/justificantes/create.php';		

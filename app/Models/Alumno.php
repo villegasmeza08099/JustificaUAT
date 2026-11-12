@@ -22,6 +22,27 @@ class Alumno
         return $db->query($sql) ->fetchAll(PDO::FETCH_ASSOC);
     }
 	
+	public static function obtenerActivos()
+	{
+		$db = Database::connect();
+
+		$sql = "
+			SELECT
+				a.*,
+				c.nombre AS carrera
+			FROM alumnos a
+			INNER JOIN carreras c
+				ON c.id = a.carrera_id
+			INNER JOIN usuarios u
+				ON u.id = a.usuario_id
+			WHERE u.activo = 1
+			ORDER BY a.nombre
+		";
+
+		return $db->query($sql)
+				  ->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
 	public static function obtenerPorUsuario($usuarioId)
     {
        $db = Database::connect();

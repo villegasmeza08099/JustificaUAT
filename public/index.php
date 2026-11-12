@@ -2,6 +2,12 @@
 
 require_once '../config/bootstrap.php';
 
+if(!isset($_SESSION['usuario_id']))
+{
+    header('Location: login.php');
+    exit;
+}
+
 $page = $_GET['page'] ?? 'dashboard';
 
 switch ($page) {

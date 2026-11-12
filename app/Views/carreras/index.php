@@ -16,7 +16,7 @@ include '../app/Views/layouts/navbar.php';
                 <h2>Catálogo de Carreras</h2>
 
                 <a href="index.php?page=carreras_create"
-                   class="btn btn-primary mb3">
+                   class="btn btn-success">
                     Nueva Carrera
                 </a>
             </div>

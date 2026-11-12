@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.2.1 (64 bit)
-MySQL - 10.4.28-MariaDB : Database - justificauat
+SQLyog Community v13.1.7 (64 bit)
+MySQL - 10.11.16-MariaDB : Database - justificauat
 *********************************************************************
 */
 
@@ -44,7 +44,7 @@ insert  into `alumnos`(`id`,`matricula`,`nombre`,`carrera_id`,`correo`,`telefono
 (2,'a21210015','José Manuel Alarcón Dorantes',1,NULL,NULL,1,'2026-10-12 15:55:45',NULL),
 (3,'a21210016','Alfredo López Piña',2,NULL,NULL,1,'2026-10-12 17:11:31',NULL),
 (4,'a21210017','Ángel Gabriel García',1,'angel@uat.edu.mx',NULL,1,'2026-10-15 11:54:41',4),
-(5,'a22210020','Rodolfo Alberto Martínez Ferrer',3,NULL,NULL,1,'2026-10-16 15:32:12',NULL),
+(5,'a22210020','Rodolfo Alberto Martínez Ferrer',3,NULL,NULL,1,'2026-10-16 15:32:12',6),
 (6,'a22210057','Fortunato Domínguez Hernández',3,NULL,NULL,1,'2026-10-16 15:43:25',7);
 
 /*Table structure for table `bitacora` */
@@ -62,7 +62,7 @@ CREATE TABLE `bitacora` (
   PRIMARY KEY (`id`),
   KEY `fk_bitacora_usuario` (`usuario_id`),
   CONSTRAINT `fk_bitacora_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bitacora` */
 
@@ -141,7 +141,19 @@ insert  into `bitacora`(`id`,`usuario_id`,`accion`,`descripcion`,`ip`,`modulo`,`
 (72,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:18:52'),
 (73,4,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:30:28'),
 (74,3,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-10-29 16:32:01'),
-(75,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-05 18:10:07');
+(75,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-05 18:10:07'),
+(76,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 09:33:13'),
+(77,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 09:52:21'),
+(78,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 09:52:57'),
+(79,6,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 09:53:08'),
+(80,3,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 09:55:16'),
+(81,3,'Evaluación DSS','Resultado: Aprobado','::1','Sistema','2026-11-12 10:00:29'),
+(82,3,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 10:00:59'),
+(83,3,'Evaluación DSS','Resultado: Aprobado','::1','Sistema','2026-11-12 10:01:08'),
+(84,3,'Registro de justificante','Nuevo justificante registrado','::1','Sistema','2026-11-12 10:01:50'),
+(85,3,'Evaluación DSS','Resultado: Rechazado','::1','Sistema','2026-11-12 10:02:22'),
+(86,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 10:20:09'),
+(87,2,'Inicio de sesión','Acceso al sistema','::1','Sistema','2026-11-12 10:20:36');
 
 /*Table structure for table `carreras` */
 
@@ -272,20 +284,22 @@ CREATE TABLE `justificantes` (
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_resolucion` datetime DEFAULT NULL,
   `observaciones` text DEFAULT NULL,
+  `pdf_path` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `folio` (`folio`),
   KEY `fk_justificante_alumno` (`alumno_id`),
   KEY `fk_justificante_materia` (`materia_id`),
   CONSTRAINT `fk_justificante_alumno` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`id`),
   CONSTRAINT `fk_justificante_materia` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `justificantes` */
 
-insert  into `justificantes`(`id`,`folio`,`alumno_id`,`materia_id`,`fecha_ausencia`,`motivo`,`archivo_evidencia`,`estado`,`fecha_registro`,`fecha_resolucion`,`observaciones`) values 
-(2,'JUS-20261014120525',2,1,'2026-10-15','Enfermedad','1792015605_abs.pdf','Correccion','2026-10-14 12:05:25',NULL,NULL),
-(3,'JUS-20261014163902',2,2,'2026-10-13','Enfermedad','1792017542_abs.pdf','Pendiente','2026-10-14 16:39:02',NULL,NULL),
-(4,'JUS-20261015122258',4,1,'2026-10-15','Enfermedad','1792088578_abs.pdf','Aprobado','2026-10-15 12:22:58',NULL,NULL);
+insert  into `justificantes`(`id`,`folio`,`alumno_id`,`materia_id`,`fecha_ausencia`,`motivo`,`archivo_evidencia`,`estado`,`fecha_registro`,`fecha_resolucion`,`observaciones`,`pdf_path`) values 
+(2,'JUS-20261014120525',2,1,'2026-10-15','Enfermedad','1792015605_abs.pdf','Aprobado','2026-10-14 12:05:25',NULL,NULL,'C:\\xampp\\htdocs\\JustificaUAT-MVC\\app\\Services/../../storage/uploads/pdf/JUS-20261014120525.pdf'),
+(3,'JUS-20261014163902',2,2,'2026-10-13','Enfermedad','1792017542_abs.pdf','Aprobado','2026-10-14 16:39:02',NULL,NULL,'C:\\xampp\\htdocs\\JustificaUAT-MVC\\app\\Services/../../storage/uploads/pdf/JUS-20261014163902.pdf'),
+(4,'JUS-20261015122258',4,1,'2026-10-15','Enfermedad','1792088578_abs.pdf','Aprobado','2026-10-15 12:22:58',NULL,NULL,NULL),
+(5,'JUS-20261112100150',4,2,'2026-11-04','Enfermedad','1794499310_abs.pdf','Rechazado','2026-11-12 10:01:50',NULL,NULL,NULL);
 
 /*Table structure for table `materias` */
 
@@ -374,11 +388,11 @@ CREATE TABLE `usuarios` (
 /*Data for the table `usuarios` */
 
 insert  into `usuarios`(`id`,`nombre`,`apellido_paterno`,`apellido_materno`,`correo`,`password`,`rol_id`,`activo`,`ultimo_acceso`,`created_at`,`updated_at`) values 
-(2,'Administrador','General',NULL,'admin@justificauat.mx','$2y$10$jMLaTT7vM1KnOOmTKD5QrO0joYLXNE/IQfUfvXdJgaDxb6qUrHZFm',1,1,'2026-11-05 18:10:07','2026-10-08 11:04:14','2026-11-05 18:10:07'),
-(3,'Gabriela Berenice Villegas Meza',NULL,NULL,'villegas.meza.08099@itsmante.edu.mx','$2y$10$B77tESPD2b3tY7ZKF5bglOGloi8AGfKFLVuu8PV5TRapk1NXZfmaG',2,1,'2026-10-29 16:32:01','2026-10-14 10:59:01','2026-10-29 16:32:01'),
-(4,'Ángel Gabriel',NULL,NULL,'angel@uat.edu.mx','$2y$10$Y7/ataHaChpu6hkLmFVinOf8B7n6YjuxDCJnFqlri7FamgAoLZpcW',3,1,'2026-10-29 16:30:28','2026-10-15 10:20:50','2026-10-29 16:30:28'),
+(2,'Administrador','General',NULL,'admin@justificauat.mx','$2y$10$jMLaTT7vM1KnOOmTKD5QrO0joYLXNE/IQfUfvXdJgaDxb6qUrHZFm',1,1,'2026-11-12 10:20:36','2026-10-08 11:04:14','2026-11-12 10:20:36'),
+(3,'Gabriela Berenice Villegas Meza',NULL,NULL,'villegas.meza.08099@itsmante.edu.mx','$2y$10$B77tESPD2b3tY7ZKF5bglOGloi8AGfKFLVuu8PV5TRapk1NXZfmaG',2,1,'2026-11-12 10:00:59','2026-10-14 10:59:01','2026-11-12 10:00:59'),
+(4,'Ángel Gabriel',NULL,NULL,'angel@uat.edu.mx','$2y$10$Y7/ataHaChpu6hkLmFVinOf8B7n6YjuxDCJnFqlri7FamgAoLZpcW',3,1,'2026-10-29 16:30:28','2026-10-15 10:20:50','2026-11-12 09:49:57'),
 (5,'Alberto Trejo López',NULL,NULL,'alberto@uat.edu.mx','$2y$10$DwpceWYgd0k9m79Z/vA7VOLcOMP8ed92o0MGBGkjPuM091SQa2pQS',3,1,NULL,'2026-10-16 15:21:29','2026-10-16 15:21:29'),
-(6,'Rodolfo Alberto Martínez Ferrer',NULL,NULL,'rodolfo@uat.edu.mx','$2y$10$vPq/BVImlFy8JhfbG.9x9ehGieq0fvl62/i6v4T/VIRMyQvHdA856',3,1,NULL,'2026-10-16 15:32:12','2026-10-16 15:32:12'),
+(6,'Rodolfo Alberto Martínez Ferrer',NULL,NULL,'rodolfo@uat.edu.mx','$2y$10$vPq/BVImlFy8JhfbG.9x9ehGieq0fvl62/i6v4T/VIRMyQvHdA856',3,1,'2026-11-12 09:53:08','2026-10-16 15:32:12','2026-11-12 09:53:08'),
 (7,'Fortunato Domínguez Hernández',NULL,NULL,'fortunato@uat.edu.mx','$2y$10$qHk.q/ncwoGHcncAoWTlKeCiMC/SheT7DWqC42Hjfn85ilH7xyRAm',3,1,'2026-10-16 15:45:09','2026-10-16 15:43:25','2026-10-16 15:45:09');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
